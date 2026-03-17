@@ -29,7 +29,7 @@ export default function AppLayout() {
   const title = pageTitles[pathname] || 'InternPulse'
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background dark:bg-gray-950">
+    <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-base)' }}>
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header title={title} />

@@ -2,32 +2,32 @@ import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAuthStore } from '../../stores/authStore'
-import {
-  Target, BarChart3, FileText, Zap, Users, Trophy, Bell, ArrowRight,
-  CheckCircle, ChevronRight, Star
+import { 
+  Target, BarChart3, FileText, Zap, Trophy, Bell, ArrowRight,
+  CheckCircle, Star, Users, Sparkles, TrendingUp, Shield
 } from 'lucide-react'
 
 const features = [
-  { icon: Target, title: 'Smart Goal Assignment', description: 'Managers set weekly goals with deadlines, points, and AI-powered suggestions tailored to each intern.' },
-  { icon: FileText, title: 'Rich Report Submission', description: 'Interns submit detailed weekly reports using a full-featured text editor with attachments support.' },
-  { icon: BarChart3, title: 'Real-Time Analytics', description: 'Track productivity trends, goal completion rates, and report submission patterns with beautiful charts.' },
-  { icon: Trophy, title: 'Intern Leaderboard', description: 'Gamify the experience with a ranked leaderboard — rewarding top performers and driving engagement.' },
-  { icon: Bell, title: 'Smart Notifications', description: 'Automated reminders ensure interns submit on time and managers never miss a review.' },
-  { icon: Zap, title: 'AI-Powered Summaries', description: 'Managers get instant AI summaries of intern reports, making reviews 10x faster.' },
+  { icon: Target,    title: 'Smart Goal Assignment',  desc: 'Weekly goals with deadlines, points, and AI-powered suggestions.' },
+  { icon: FileText,  title: 'Rich Report Editor',     desc: 'Full-featured rich text editor for detailed weekly progress reports.' },
+  { icon: BarChart3, title: 'Live Analytics Dashboard', desc: 'Real-time productivity trends and beautiful performance charts.' },
+  { icon: Trophy,    title: 'Gamified Leaderboard',   desc: 'Ranked leaderboard rewarding top performers and driving engagement.' },
+  { icon: Bell,      title: 'Smart Notifications',    desc: 'Automated reminders so interns submit on time, always.' },
+  { icon: Sparkles,  title: 'AI-Powered Summaries',   desc: 'Instant AI summaries make report reviews 10x faster.' },
 ]
 
 const steps = [
-  { step: '01', title: 'Manager creates interns', desc: 'Onboard your interns in seconds with role assignment and department setup.' },
-  { step: '02', title: 'Assign weekly goals', desc: 'Use the 3-step goal wizard to set objectives, deadlines, and point values.' },
-  { step: '03', title: 'Interns submit reports', desc: 'Rich text editor makes it easy to document progress, blockers, and learnings.' },
-  { step: '04', title: 'Review & approve', desc: 'Managers review, score with AI summaries, and provide structured feedback.' },
+  { num: '01', icon: Shield, title: 'Admin onboards team',      desc: 'Create accounts for managers and interns with role-based access.' },
+  { num: '02', icon: Target, title: 'Manager assigns goals',    desc: '3-step wizard to set weekly objectives, points, and deadlines.' },
+  { num: '03', icon: FileText,title: 'Interns submit reports',  desc: 'Rich text editor to document progress, blockers, and learnings.' },
+  { num: '04', icon: TrendingUp, title: 'Review & approve',     desc: 'Managers score with AI summaries and provide feedback in seconds.' },
 ]
 
 const stats = [
-  { label: 'Interns Tracked', value: '2,400+' },
-  { label: 'Goals Completed', value: '18,500+' },
-  { label: 'Reports Reviewed', value: '34,200+' },
-  { label: 'Companies Using', value: '120+' },
+  { value: '2,400+', label: 'Interns Tracked' },
+  { value: '18K+',   label: 'Goals Completed' },
+  { value: '34K+',   label: 'Reports Reviewed' },
+  { value: '120+',   label: 'Companies' },
 ]
 
 export default function LandingPage() {
@@ -45,196 +45,269 @@ export default function LandingPage() {
   }, [isAuthenticated, user, navigate])
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 font-sans">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-border dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
-              <span className="text-white text-sm font-bold">IP</span>
-            </div>
-            <span className="font-bold text-secondary dark:text-white text-lg">InternPulse</span>
+    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: 'var(--bg-base)', color: 'var(--text-primary)' }}>
+
+      {/* ─── NAVBAR ─── */}
+      <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-12 h-16"
+        style={{
+          background: 'var(--header-bg)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderBottom: '1px solid var(--header-border)',
+        }}>
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center"
+            style={{ background: 'linear-gradient(135deg, #7C3AED, #4F46E5)', boxShadow: '0 0 16px rgba(124,58,237,0.5)' }}>
+            <Zap size={16} className="text-white" />
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm text-gray-600 dark:text-gray-400">
-            <a href="#features" className="hover:text-primary-500 transition-colors">Features</a>
-            <a href="#how-it-works" className="hover:text-primary-500 transition-colors">How it Works</a>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link to="/login" className="text-secondary dark:text-gray-300 hover:text-primary-500 font-semibold transition-colors">Login</Link>
-            {/* <Link to="/login" className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-3 rounded-2xl transition-all hover:shadow-glow">
-              Get Started
-            </Link> */}
-          </div>
+          <span className="font-bold text-white text-lg">InternPulse</span>
+        </div>
+        <div className="hidden md:flex items-center gap-8 text-sm" style={{ color: 'var(--text-muted)' }}>
+          <a href="#features" className="hover:text-purple-500 transition-colors">Features</a>
+          <a href="#how-it-works" className="hover:text-purple-500 transition-colors">How it Works</a>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link to="/login" className="text-sm font-semibold transition-colors"
+            style={{ color: 'rgba(167,139,250,0.8)' }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#A78BFA')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(167,139,250,0.8)')}>
+            Sign In
+          </Link>
+          <Link to="/login"
+            className="text-sm font-semibold px-5 py-2.5 rounded-2xl transition-all duration-200"
+            style={{
+              background: 'linear-gradient(135deg, #7C3AED, #6D28D9)',
+              color: '#fff',
+              boxShadow: '0 4px 15px rgba(124,58,237,0.4)',
+            }}>
+            Get Started
+          </Link>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 pt-20 pb-32">
-        {/* Background blobs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-200 dark:bg-primary-900/30 rounded-full blur-3xl opacity-30 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-blue-200 dark:bg-blue-900/20 rounded-full blur-3xl opacity-30 translate-y-1/2" />
+      {/* ─── HERO ─── */}
+      <section className="relative overflow-hidden pt-24 pb-32 px-6">
+        {/* Orbs */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] -translate-y-1/2 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%)', borderRadius:'50%' }} />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] translate-y-1/2 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(6,214,160,0.1) 0%, transparent 70%)', borderRadius:'50%' }} />
 
-        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-flex items-center gap-2 bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
-              <Star size={12} className="fill-current" />
+        {/* Grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: `linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px',
+          }} />
+
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+            <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full text-xs font-semibold"
+              style={{
+                background: 'rgba(124,58,237,0.12)',
+                border: '1px solid rgba(124,58,237,0.25)',
+                color: '#A78BFA',
+              }}>
+              <Star size={11} className="fill-current" />
               #1 Internship Management Platform
-            </span>
-            <h1 className="text-5xl md:text-7xl font-extrabold text-secondary dark:text-white leading-tight tracking-tight mb-6">
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#06D6A0', boxShadow: '0 0 6px #06D6A0' }} />
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight mb-6"
+              style={{ letterSpacing: '-0.02em' }}>
               Track Intern Progress{' '}
-              <span className="bg-gradient-to-r from-primary-500 to-blue-500 bg-clip-text text-transparent">
-                Smarter
+              <span style={{
+                background: 'linear-gradient(135deg, #A78BFA 0%, #7C3AED 40%, #06D6A0 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                Smarter.
               </span>
-              <br />with InternPulse
             </h1>
-            <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              The complete platform for managers to assign goals, track intern progress, and review weekly reports — all in one beautiful dashboard.
+
+        <p className="text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+          style={{ color: 'var(--text-muted)' }}>
+              The all-in-one platform for managers to assign goals, review weekly reports, and
+              celebrate intern success — with real-time data and AI superpowers.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* <Link to="/login" className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-4 rounded-2xl text-lg transition-all hover:scale-105 hover:shadow-glow inline-flex items-center gap-2">
-              Get Started for Free <ArrowRight size={20} />
-            </Link> */}
-              <Link
-                to="/login"
-                className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-secondary dark:text-white font-semibold px-8 py-4 rounded-2xl border border-border dark:border-gray-700 transition-all duration-150 text-base"
-              >
-                Watch Demo
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link to="/login"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base font-bold transition-all duration-200"
+                style={{
+                  background: 'linear-gradient(135deg, #7C3AED, #6D28D9)',
+                  color: '#fff',
+                  boxShadow: '0 4px 30px rgba(124,58,237,0.5)',
+                }}>
+                Start Free <ArrowRight size={18} />
               </Link>
+              <a href="#how-it-works"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold transition-all duration-200"
+                style={{
+                  background: 'rgba(26,26,46,0.8)',
+                  border: '1px solid rgba(124,58,237,0.25)',
+                  color: 'rgba(248,248,255,0.7)',
+                }}>
+                See How It Works
+              </a>
             </div>
           </motion.div>
 
-          {/* Stats bar */}
+          {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
-          >
-            {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-2xl font-bold text-secondary dark:text-white">{s.value}</p>
-                <p className="text-sm text-muted mt-1">{s.label}</p>
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {stats.map(({ value, label }) => (
+              <div key={label} className="rounded-3xl p-5 text-center"
+                style={{
+                  background: 'var(--card-bg)',
+                  border: '1px solid var(--border-color)',
+                }}>
+                <p className="text-2xl font-extrabold" style={{ color: 'var(--text-primary)' }}>{value}</p>
+                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{label}</p>
               </div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="py-24 bg-white dark:bg-gray-950">
-        <div className="max-w-7xl mx-auto px-6">
+      {/* ─── FEATURES ─── */}
+      <section id="features" className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary dark:text-white mb-4">
-              Everything you need to run a{' '}
-              <span className="text-primary-500">world-class</span> internship
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Everything you need for a{' '}
+              <span style={{ color: '#A78BFA' }}>world-class</span> internship
             </h2>
-            <p className="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-              A powerful suite of tools for managers and interns to collaborate, track progress, and celebrate wins.
+            <p className="text-lg max-w-xl mx-auto" style={{ color: 'rgba(248,248,255,0.45)' }}>
+              A powerful suite of tools designed for speed, clarity, and delight.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map(({ icon: Icon, title, description }, i) => (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0, y: 20 }}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {features.map(({ icon: Icon, title, desc }, i) => (
+              <motion.div key={title}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl border border-border dark:border-gray-800 bg-white dark:bg-gray-900 hover:shadow-hover hover:-translate-y-1 transition-all duration-200 group"
-              >
-                <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/50 transition-colors">
-                  <Icon size={22} className="text-primary-500" />
+                transition={{ delay: i * 0.08 }}
+                className="rounded-3xl p-6 group transition-all duration-300 cursor-default"
+                style={{
+                  background: 'linear-gradient(145deg, rgba(26,26,46,0.95) 0%, rgba(22,22,40,0.9) 100%)',
+                  border: '1px solid rgba(124,58,237,0.12)',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(124,58,237,0.35)'
+                  ;(e.currentTarget as HTMLDivElement).style.boxShadow = '0 0 40px rgba(124,58,237,0.15)'
+                  ;(e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)'
+                }}
+                onMouseLeave={e => {
+                  ;(e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(124,58,237,0.12)'
+                  ;(e.currentTarget as HTMLDivElement).style.boxShadow = 'none'
+                  ;(e.currentTarget as HTMLDivElement).style.transform = 'none'
+                }}>
+                <div className="w-11 h-11 rounded-2xl flex items-center justify-center mb-4"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(124,58,237,0.25), rgba(79,70,229,0.15))',
+                    border: '1px solid rgba(124,58,237,0.2)',
+                  }}>
+                  <Icon size={20} style={{ color: '#A78BFA' }} />
                 </div>
-                <h3 className="font-semibold text-secondary dark:text-white mb-2">{title}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{description}</p>
+                <h3 className="font-semibold text-white mb-2 text-sm">{title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(248,248,255,0.4)' }}>{desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How it Works */}
-      <section id="how-it-works" className="py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-6">
+      {/* ─── HOW IT WORKS ─── */}
+      <section id="how-it-works" className="py-24 px-6"
+        style={{ background: 'rgba(26,26,46,0.4)', borderTop: '1px solid rgba(124,58,237,0.08)', borderBottom: '1px solid rgba(124,58,237,0.08)' }}>
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary dark:text-white mb-4">
-              How InternPulse works
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400 text-lg">From onboarding to certification — in 4 simple steps.</p>
+            <h2 className="text-4xl font-bold text-white mb-4">How InternPulse works</h2>
+            <p className="text-lg" style={{ color: 'rgba(248,248,255,0.45)' }}>From onboarding to certification — in 4 steps.</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map(({ step, title, desc }, i) => (
-              <motion.div
-                key={step}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map(({ num, icon: Icon, title, desc }, i) => (
+              <motion.div key={num}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="relative"
-              >
-                <div className="text-6xl font-black text-primary-100 dark:text-primary-900/50 mb-3">{step}</div>
-                <h3 className="font-semibold text-secondary dark:text-white mb-2">{title}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
-                {i < 3 && (
-                  <ChevronRight
-                    size={20}
-                    className="hidden lg:block absolute -right-4 top-8 text-primary-300 dark:text-primary-700"
-                  />
-                )}
+                transition={{ delay: i * 0.12 }}
+                className="relative">
+                <div className="text-6xl font-black mb-3 leading-none" style={{ color: 'rgba(124,58,237,0.15)', fontVariantNumeric: 'tabular-nums' }}>{num}</div>
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-3"
+                  style={{ background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(124,58,237,0.2)' }}>
+                  <Icon size={18} style={{ color: '#A78BFA' }} />
+                </div>
+                <h3 className="font-semibold text-white mb-2 text-sm">{title}</h3>
+                <p className="text-xs leading-relaxed" style={{ color: 'rgba(248,248,255,0.4)' }}>{desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary-500 to-blue-600">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Ready to transform your internship program?
-          </h2>
-          <p className="text-primary-100 text-lg mb-8">
-            Join 120+ companies already using InternPulse to build better internships.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/login"
-              className="bg-white text-primary-600 font-semibold px-8 py-4 rounded-2xl hover:bg-primary-50 transition-all duration-150 flex items-center gap-2 justify-center"
-            >
-              Sign In to Start <ArrowRight size={18} />
-            </Link>
-            <Link
-              to="/login"
-              className="border-2 border-white/50 text-white font-semibold px-8 py-4 rounded-2xl hover:bg-white/10 transition-all duration-150"
-            >
-              Login to Dashboard
-            </Link>
-          </div>
-          <div className="flex items-center justify-center gap-2 mt-8 text-primary-100 text-sm">
-            <CheckCircle size={16} />
-            No credit card required — Free for teams up to 5 interns
+      {/* ─── CTA ─── */}
+      <section className="py-24 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="rounded-3xl p-12 relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(79,70,229,0.1) 100%)',
+              border: '1px solid rgba(124,58,237,0.3)',
+            }}>
+            {/* Glow spot */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[100px] pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.4) 0%, transparent 70%)' }} />
+
+            <h2 className="text-4xl font-bold text-white mb-4 relative">
+              Ready to level up your internship program?
+            </h2>
+            <p className="text-lg mb-8 relative" style={{ color: 'rgba(248,248,255,0.55)' }}>
+              Join 120+ companies already using InternPulse.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center relative">
+              <Link to="/login"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-white transition-all duration-200"
+                style={{ background: 'linear-gradient(135deg, #7C3AED, #6D28D9)', boxShadow: '0 4px 25px rgba(124,58,237,0.5)' }}>
+                Get Started Free <ArrowRight size={18} />
+              </Link>
+              <Link to="/login"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold transition-all duration-200"
+                style={{ border: '1px solid rgba(248,248,255,0.2)', color: 'rgba(248,248,255,0.7)' }}>
+                Sign In to Dashboard
+              </Link>
+            </div>
+            <div className="flex items-center justify-center gap-2 mt-8 text-sm"
+              style={{ color: 'rgba(6,214,160,0.7)' }}>
+              <CheckCircle size={15} />
+              No credit card needed — Free for teams up to 5 interns
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 bg-secondary dark:bg-gray-950">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      {/* ─── FOOTER ─── */}
+      <footer className="py-10 px-6"
+        style={{ borderTop: '1px solid rgba(124,58,237,0.1)' }}>
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">IP</span>
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, #7C3AED, #4F46E5)' }}>
+              <Zap size={14} className="text-white" />
             </div>
-            <span className="text-white font-semibold">InternPulse</span>
+            <span className="font-bold text-white">InternPulse</span>
           </div>
-          <p className="text-gray-500 text-sm">© 2025 InternPulse. Built for hackathon excellence.</p>
-          <div className="flex gap-6 text-sm text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
-            <a href="#" className="hover:text-white transition-colors">Contact</a>
+          <p className="text-xs" style={{ color: 'rgba(248,248,255,0.3)' }}>
+            © 2025 InternPulse · Built for hackathon excellence 🚀
+          </p>
+          <div className="flex gap-6 text-xs" style={{ color: 'rgba(248,248,255,0.3)' }}>
+            {['Privacy', 'Terms', 'Contact'].map(l => (
+              <a key={l} href="#" className="hover:text-white transition-colors">{l}</a>
+            ))}
           </div>
         </div>
       </footer>

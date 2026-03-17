@@ -1,42 +1,39 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { 
   LayoutDashboard, Users, Target, FileText, BarChart3, Bell, 
-  Settings, HelpCircle, LogOut, UserCircle, Kanban, Calendar,
-  Trophy, ChevronLeft, ChevronRight, Shield
+  Settings, HelpCircle, LogOut, Kanban, Calendar,
+  Trophy, ChevronLeft, ChevronRight, Shield, Zap
 } from 'lucide-react'
 import { useAuthStore } from '../../stores/authStore'
 import { cn } from '../../utils/cn'
 import { useState } from 'react'
 
 const internMenu = [
-  { icon: LayoutDashboard, label: 'Dashboard', to: '/intern/dashboard' },
-  { icon: Target, label: 'My Goals', to: '/intern/goals' },
-  { icon: FileText, label: 'Submit Report', to: '/intern/reports/new' },
-  { icon: FileText, label: 'Report History', to: '/intern/reports/history' },
-  { icon: Trophy, label: 'Leaderboard', to: '/intern/leaderboard' },
+  { icon: LayoutDashboard, label: 'Dashboard',      to: '/intern/dashboard' },
+  { icon: Target,          label: 'My Goals',       to: '/intern/goals' },
+  { icon: FileText,        label: 'Submit Report',  to: '/intern/reports/new' },
+  { icon: FileText,        label: 'History',        to: '/intern/reports/history' },
+  { icon: Trophy,          label: 'Leaderboard',    to: '/intern/leaderboard' },
 ]
-
 const managerMenu = [
-  { icon: LayoutDashboard, label: 'Dashboard', to: '/manager/dashboard' },
-  { icon: Users, label: 'Interns', to: '/manager/interns' },
-  { icon: Target, label: 'Create Goal', to: '/manager/goals/create' },
-  { icon: FileText, label: 'Review Queue', to: '/manager/reviews' },
-  { icon: BarChart3, label: 'Analytics', to: '/manager/analytics' },
+  { icon: LayoutDashboard, label: 'Dashboard',      to: '/manager/dashboard' },
+  { icon: Users,           label: 'Interns',        to: '/manager/interns' },
+  { icon: Target,          label: 'Create Goal',    to: '/manager/goals/create' },
+  { icon: FileText,        label: 'Review Queue',   to: '/manager/reviews' },
+  { icon: BarChart3,       label: 'Analytics',      to: '/manager/analytics' },
 ]
-
 const adminMenu = [
-  { icon: Shield, label: 'User Management', to: '/admin/users' },
-  { icon: Users, label: 'Cohorts', to: '/admin/cohorts' },
-  { icon: Bell, label: 'Notif Logs', to: '/admin/notification-logs' },
-  { icon: Settings, label: 'System Settings', to: '/admin/settings' },
+  { icon: Shield,          label: 'Users',          to: '/admin/users' },
+  { icon: Users,           label: 'Cohorts',        to: '/admin/cohorts' },
+  { icon: Bell,            label: 'Notif Logs',     to: '/admin/logs' },
+  { icon: Settings,        label: 'Settings',       to: '/admin/settings' },
 ]
-
 const commonMenu = [
-  { icon: Bell, label: 'Notifications', to: '/notifications' },
-  { icon: Kanban, label: 'Kanban Board', to: '/kanban' },
-  { icon: Calendar, label: 'Calendar', to: '/calendar' },
-  { icon: Settings, label: 'Settings', to: '/settings' },
-  { icon: HelpCircle, label: 'Help & Support', to: '/help' },
+  { icon: Bell,            label: 'Notifications',  to: '/notifications' },
+  { icon: Kanban,          label: 'Kanban Board',   to: '/kanban' },
+  { icon: Calendar,        label: 'Calendar',       to: '/calendar' },
+  { icon: Settings,        label: 'Settings',       to: '/settings' },
+  { icon: HelpCircle,      label: 'Help',           to: '/help' },
 ]
 
 export default function Sidebar() {
@@ -48,112 +45,108 @@ export default function Sidebar() {
     user?.role === 'manager' ? managerMenu :
     user?.role === 'admin'   ? adminMenu   : internMenu
 
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
+  const handleLogout = () => { logout(); navigate('/login') }
 
   return (
-    <aside className={cn(
-      'h-screen flex flex-col bg-white dark:bg-gray-900 border-r border-border dark:border-gray-800 transition-all duration-300 relative',
-      collapsed ? 'w-[68px]' : 'w-[260px]'
-    )}>
+    <aside
+      className={cn('h-screen flex flex-col relative shrink-0 transition-all duration-300', collapsed ? 'w-[70px]' : 'w-[270px]')}
+      style={{ background: 'var(--sidebar-bg)', borderRight: '1px solid var(--sidebar-border)' }}>
+
       {/* Logo */}
-      <div className={cn(
-        'flex items-center gap-3 px-4 h-16 border-b border-border dark:border-gray-800 shrink-0',
-        collapsed && 'justify-center px-2'
-      )}>
-        <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shrink-0">
-          <span className="text-white text-sm font-bold">IP</span>
+      <div
+        className={cn('flex items-center gap-3 h-[68px] px-4 shrink-0', collapsed && 'justify-center px-2')}
+        style={{ borderBottom: '1px solid var(--sidebar-border)' }}>
+        <div
+          className="w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 relative"
+          style={{ background: 'linear-gradient(135deg, #7C3AED, #4F46E5)', boxShadow: '0 0 18px rgba(124,58,237,0.45)' }}>
+          <Zap size={17} className="text-white" />
+          <span
+            className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
+            style={{ background: '#06D6A0', boxShadow: '0 0 6px #06D6A0', borderColor: 'var(--sidebar-bg)' }} />
         </div>
         {!collapsed && (
           <div>
-            <p className="text-sm font-bold text-secondary dark:text-white">InternPulse</p>
-            <p className="text-xs text-muted capitalize">{user?.role} Portal</p>
+            <p className="text-sm font-bold tracking-wide" style={{ color: 'var(--text-primary)' }}>InternPulse</p>
+            <p className="text-[10px] font-medium capitalize" style={{ color: 'var(--text-muted)' }}>
+              {user?.role} Portal
+            </p>
           </div>
         )}
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1">
-        {/* Role-specific */}
-        <div className="space-y-0.5">
-          {!collapsed && <p className="text-xs font-semibold text-muted uppercase px-3 pb-1">Menu</p>}
-          {roleMenu.map(({ icon: Icon, label, to }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                cn('sidebar-item', isActive && 'active', collapsed && 'justify-center px-2')
-              }
-              title={collapsed ? label : undefined}
-            >
-              <Icon size={18} className="shrink-0" />
-              {!collapsed && <span>{label}</span>}
-            </NavLink>
-          ))}
-        </div>
+      <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-0.5">
+        {!collapsed && (
+          <p className="text-[10px] font-bold uppercase px-3 pb-2 pt-1 tracking-widest"
+            style={{ color: 'var(--primary)', opacity: 0.7 }}>
+            {user?.role === 'manager' ? 'Management' : user?.role === 'admin' ? 'Administration' : 'My Workspace'}
+          </p>
+        )}
+        {roleMenu.map(({ icon: Icon, label, to }) => (
+          <NavLink key={to} to={to}
+            className={({ isActive }) => cn('sidebar-item', isActive && 'active', collapsed && 'justify-center px-2')}
+            title={collapsed ? label : undefined}>
+            <Icon size={16} className="shrink-0" />
+            {!collapsed && <span>{label}</span>}
+          </NavLink>
+        ))}
 
-        {/* Divider */}
-        <div className="border-t border-border dark:border-gray-800 my-2" />
+        <div className="my-2 mx-1" style={{ height: '1px', background: 'var(--sidebar-border)' }} />
 
-        {/* Common */}
-        <div className="space-y-0.5">
-          {!collapsed && <p className="text-xs font-semibold text-muted uppercase px-3 pb-1">General</p>}
-          {commonMenu.map(({ icon: Icon, label, to }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                cn('sidebar-item', isActive && 'active', collapsed && 'justify-center px-2')
-              }
-              title={collapsed ? label : undefined}
-            >
-              <Icon size={18} className="shrink-0" />
-              {!collapsed && <span>{label}</span>}
-            </NavLink>
-          ))}
-        </div>
+        {!collapsed && (
+          <p className="text-[10px] font-bold uppercase px-3 pb-2 tracking-widest"
+            style={{ color: 'var(--primary)', opacity: 0.7 }}>General</p>
+        )}
+        {commonMenu.map(({ icon: Icon, label, to }) => (
+          <NavLink key={to} to={to}
+            className={({ isActive }) => cn('sidebar-item', isActive && 'active', collapsed && 'justify-center px-2')}
+            title={collapsed ? label : undefined}>
+            <Icon size={16} className="shrink-0" />
+            {!collapsed && <span>{label}</span>}
+          </NavLink>
+        ))}
       </nav>
 
-      {/* User card + Logout */}
-      <div className="border-t border-border dark:border-gray-800 p-3 space-y-2 shrink-0">
-        <div className={cn('flex items-center gap-3', collapsed && 'justify-center')}>
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shrink-0">
-            {user?.avatar ? (
-              <img src={user.avatar} alt={user.name} className="w-9 h-9 rounded-xl object-cover" />
-            ) : (
-              <span className="text-white text-sm font-semibold">
-                {user?.name?.charAt(0).toUpperCase()}
-              </span>
-            )}
+      {/* User card + logout */}
+      <div className="shrink-0 p-3" style={{ borderTop: '1px solid var(--sidebar-border)' }}>
+        <div
+          className={cn('flex items-center gap-3 p-2.5 rounded-2xl mb-2', collapsed && 'justify-center')}
+          style={{ background: 'var(--bg-surface-2)', border: '1px solid var(--border-color)' }}>
+          <div
+            className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-sm font-bold text-white"
+            style={{ background: 'linear-gradient(135deg, #7C3AED, #4F46E5)' }}>
+            {user?.name?.charAt(0).toUpperCase()}
           </div>
           {!collapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-secondary dark:text-white truncate">{user?.name}</p>
-              <p className="text-xs text-muted truncate">{user?.email}</p>
+              <p className="text-xs font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{user?.name}</p>
+              <p className="text-[10px] truncate" style={{ color: 'var(--text-muted)' }}>{user?.email}</p>
             </div>
           )}
         </div>
         <button
           onClick={handleLogout}
-          className={cn(
-            'w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-danger hover:bg-danger/10 transition-colors',
-            collapsed && 'justify-center px-2'
-          )}
-          title={collapsed ? 'Logout' : undefined}
-        >
-          <LogOut size={16} />
-          {!collapsed && 'Logout'}
+          title={collapsed ? 'Sign Out' : undefined}
+          className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200', collapsed && 'justify-center px-2')}
+          style={{ color: 'var(--danger)' }}
+          onMouseEnter={e => { (e.currentTarget).style.background = 'rgba(239,35,60,0.08)' }}
+          onMouseLeave={e => { (e.currentTarget).style.background = 'transparent' }}>
+          <LogOut size={15} />
+          {!collapsed && 'Sign Out'}
         </button>
       </div>
 
       {/* Collapse toggle */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute -right-3 top-20 w-6 h-6 rounded-full bg-white dark:bg-gray-800 border border-border dark:border-gray-700 flex items-center justify-center shadow-sm text-muted hover:text-primary-500 transition-colors z-10"
-      >
-        {collapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
+        className="absolute -right-3.5 top-[88px] w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 z-10"
+        style={{
+          background: 'var(--card-bg)',
+          border: '1px solid var(--border-color)',
+          color: 'var(--primary)',
+          boxShadow: 'var(--card-shadow)',
+        }}>
+        {collapsed ? <ChevronRight size={13} /> : <ChevronLeft size={13} />}
       </button>
     </aside>
   )
