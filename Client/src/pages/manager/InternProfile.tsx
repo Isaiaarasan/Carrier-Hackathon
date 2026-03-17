@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Target, FileText, Trophy, Award } from 'lucide-react'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import CalendarHeatmap from 'react-calendar-heatmap'
+import type { ReactCalendarHeatmapValue } from 'react-calendar-heatmap'
 import 'react-calendar-heatmap/dist/styles.css'
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
@@ -105,9 +105,10 @@ export default function InternProfile() {
               startDate={new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)}
               endDate={new Date()}
               values={heatmapValues}
-              classForValue={(value) => {
-                if (!value || value.count === 0) return 'color-empty'
-                return `color-scale-${value.count}`
+              classForValue={(value: ReactCalendarHeatmapValue<string> | undefined) => {
+                const v = value as any
+                if (!v || !v.count || v.count === 0) return 'color-empty'
+                return `color-scale-${Math.min(v.count, 4)}`
               }}
             />
             <style>{`

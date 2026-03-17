@@ -47,3 +47,19 @@ export const NOTIFICATION_TYPES = {
 } as const
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
+/**
+ * Certificate Score = (goalsCompleted * 40 + reportsApproved * 40 + avgFeedbackScore * 20) / 100
+ */
+export const calculateCertificateScore = (
+  goalsCompleted: number,
+  totalGoals: number,
+  reportsApproved: number,
+  avgFeedback: number // 0-100
+) => {
+  const goalWeight = totalGoals > 0 ? (goalsCompleted / totalGoals) * 40 : 0
+  const reportWeight = totalGoals > 0 ? (reportsApproved / totalGoals) * 40 : 0
+  const feedbackWeight = (avgFeedback / 100) * 20
+  
+  return Math.min(Math.round(goalWeight + reportWeight + feedbackWeight), 100)
+}
