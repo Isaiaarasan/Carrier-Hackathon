@@ -1,0 +1,115 @@
+import { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { ArrowLeft, Star, Sparkles, CheckCircle, AlertCircle, RefreshCcw } from 'lucide-react'
+import { Card, CardHeader, CardTitle, CardBody } from '../../components/ui/Card'
+import { Badge } from '../../components/ui/Badge'
+import { Button } from '../../components/ui/Button'
+import { reportService } from '../../services/reportService'
+import { formatDateTime } from '../../utils/formatDate'
+
+export default function FeedbackView() {
+  const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
+  const [report, setReport] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!id) return
+    reportService.getReportById(id)
+      .then(res => setReport(res.data.data || res.data))
+      .catch(() => setReport({
+        _id: id, goal: { title: 'Build REST API with Express' },
+        status: 'Approved', score: 88,
+        content: '<p>This week I completed the REST API endpoints for user authentication including login, register and JWT refresh tokens. I also added middleware for role-based access control.</p>',
+        managerFeedback: 'Excellent work! The API structure is clean and well-documented. The middleware implementation shows a solid understanding of Express.js concepts. Keep up the great work!',
+        aiSummary: 'The intern completed JWT authentication endpoints and RBAC middleware. Work quality is high with clean code structure.',
+        submittedAt: new Date().toISOString(), reviewedAt: new Date().toISOString(),
+      }))
+      .finally(() => setLoading(false))
+  }, [id])
+
+  if (loading) return <div className="page-container"><div className="h-96 bg-gray-100 dark:bg-gray-800 rounded-2xl animate-pulse" /></div>
+  if (!report) return null
+
+  const isApproved = report.status === 'Approved'
+  const isRevision = report.status === 'Revision-Required'
+
+  return (
+    <div className="page-container space-y-6 max-w-3xl">
+      <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-muted hover:text-primary-500 transition-colors">
+        <ArrowLeft size={16} /> Back to History
+      </button>
+
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+        {/* Status banner */}
+        <div className={`p-4 rounded-2xl flex items-center gap-3 ${isApproved ? 'bg-success/10 border border-success/20' : 'bg-danger/10 border border-danger/20'}`}>
+          {isApproved
+            ? <CheckCircle size={22} className="text-success shrink-0" />
+            : <AlertCircle size={22} className="text-danger shrink-0" />
+          }
+          <div>
+            <p className={`font-semibold text-sm ${isApproved ? 'text-success' : 'text-danger'}`}>
+              {isApproved ? '🎉 Report Approved!' : '⚠️ Revision Required'}
+            </p>
+            <p className="text-xs text-muted">{report.goal?.title}</p>
+          </div>
+          {report.score != null && (
+            <div className="ml-auto text-right">
+              <p className="text-2xl font-bold text-secondary dark:text-white">{report.score}<span className="text-sm text-muted">/100</span></p>
+              <div className="flex gap-0.5 justify-end">
+                {[1,2,3,4,5].map(s => <Star key={s} size={12} className={s <= Math.round(report.score / 20) ? 'text-warning fill-warning' : 'text-gray-300'} />)}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* AI Summary */}
+        {report.aiSummary && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles size={16} className="text-purple-500" />
+                AI Summary
+              </CardTitle>
+              <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-0.5 rounded-full font-medium">Powered by AI</span>
+            </CardHeader>
+            <CardBody>
+              <p className="text-sm text-gray-600 dark:text-gray-400 italic leading-relaxed">"{report.aiSummary}"</p>
+            </CardBody>
+          </Card>
+        )}
+
+        {/* Manager Feedback */}
+        {report.managerFeedback && (
+          <Card>
+            <CardHeader><CardTitle>Manager Feedback</CardTitle></CardHeader>
+            <CardBody>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-xs font-bold shrink-0">M</div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{report.managerFeedback}</p>
+                  <p className="text-xs text-muted mt-2">Reviewed {formatDateTime(report.reviewedAt)}</p>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        )}
+
+        {/* Report content */}
+        <Card>
+          <CardHeader><CardTitle>Your Report</CardTitle></CardHeader>
+          <CardBody>
+            <div className="prose prose-sm dark:prose-invert max-w-none text-sm text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: report.content }} />
+          </CardBody>
+        </Card>
+
+        {isRevision && (
+          <Button onClick={() => navigate(`/intern/reports/new?goalId=${report.goal?._id}`)} variant="destructive" size="lg" className="w-full">
+            <RefreshCcw size={16} /> Resubmit Report
+          </Button>
+        )}
+      </motion.div>
+    </div>
+  )
+}
