@@ -1,12 +1,23 @@
 import api from './api'
 
 export const reportService = {
-  submitReport: (data: { goalId: string; content: string }) =>
+  /** Intern submits a weekly report */
+  submitReport: (data: { goal: string; content: string; highlights?: string; blockers?: string; nextWeekPlan?: string }) =>
     api.post('/reports', data),
+
+  /** Intern's own report history */
   getMyReports: () => api.get('/reports/mine'),
+
+  /** Manager's pending review queue */
   getReviewQueue: () => api.get('/reports/queue'),
+
+  /** Get single report */
   getReportById: (id: string) => api.get(`/reports/${id}`),
-  reviewReport: (id: string, data: { status: string; score: number; feedback: string }) =>
+
+  /** Manager reviews (approve/reject) a report */
+  reviewReport: (id: string, data: { status: string; score: number; managerFeedback: string }) =>
     api.patch(`/reports/${id}/review`, data),
+
+  /** AI summarize a report */
   summarizeReport: (id: string) => api.post(`/reports/${id}/summarize`),
 }
