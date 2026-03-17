@@ -11,7 +11,7 @@ import { initCronJobs } from './cron/reminders.cron.js';
 dotenv.config();
 
 // Connect to database
-connectDB();
+await connectDB();
 
 // Init Cron Jobs
 initCronJobs();
