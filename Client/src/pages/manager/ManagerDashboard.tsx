@@ -1,34 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { Users, Target, FileText, CheckCircle, Clock, ArrowRight } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { StatCardSkeleton } from '../../components/ui/Skeleton'
-import { goalStatusBadge } from '../../components/ui/Badge'
 import { userService } from '../../services/userService'
-import { timeAgo } from '../../utils/formatDate'
-
-const pieData = [
-  { name: 'Approved', value: 34, color: '#22C55E' },
-  { name: 'In-Progress', value: 28, color: '#2563EB' },
-  { name: 'Pending', value: 18, color: '#F59E0B' },
-  { name: 'Revision', value: 8,  color: '#EF4444' },
-]
-const barData = [
-  { week: 'W1', goals: 8 }, { week: 'W2', goals: 14 },
-  { week: 'W3', goals: 11 }, { week: 'W4', goals: 18 },
-  { week: 'W5', goals: 15 }, { week: 'W6', goals: 20 },
-]
-
-const activities = [
-  { text: 'Rahul submitted Weekly Report 6', time: '2 min ago', color: 'bg-primary-500' },
-  { text: 'Priya completed "Build REST API" goal', time: '15 min ago', color: 'bg-success' },
-  { text: 'Arjun needs revision on Report 5', time: '1 hr ago', color: 'bg-warning' },
-  { text: 'Meera approved by manager', time: '2 hrs ago', color: 'bg-purple-500' },
-  { text: 'New intern Kiran joined the team', time: '1 day ago', color: 'bg-gray-400' },
-]
 
 export default function ManagerDashboard() {
   const [loading, setLoading] = useState(true)
@@ -42,16 +20,16 @@ export default function ManagerDashboard() {
           userService.getInterns(),
           userService.getAnalytics(),
         ])
-        setInterns((internsRes.data.data || internsRes.data).slice(0, 5))
-        const a = analyticsRes.data.data || analyticsRes.data
+        setInterns((internsRes.data.data || internsRes.data || []).slice(0, 5))
+        const a = analyticsRes.data.data || analyticsRes.data || {}
         setStats({
-          interns: a.totalInterns || 12,
-          activeGoals: a.activeGoals || 20,
-          pendingReviews: a.pendingReviews || 6,
-          completedGoals: a.completedGoals || 34,
+          interns: a.totalInterns || 0,
+          activeGoals: a.activeGoals || 0,
+          pendingReviews: a.pendingReviews || 0,
+          completedGoals: a.completedGoals || 0,
         })
-      } catch {
-        setStats({ interns: 12, activeGoals: 20, pendingReviews: 6, completedGoals: 34 })
+      } catch (err) {
+        console.error("Manager Dashboard Error:", err)
       } finally {
         setLoading(false)
       }
@@ -66,8 +44,21 @@ export default function ManagerDashboard() {
     { label: 'Goals Completed', value: stats.completedGoals, icon: CheckCircle, color: 'text-success', bg: 'bg-success/10', to: '/manager/analytics' },
   ]
 
+  const chartData = [
+    { name: 'Active', value: stats.activeGoals },
+    { name: 'Completed', value: stats.completedGoals },
+    { name: 'Reviews', value: stats.pendingReviews }
+  ]
+
   return (
     <div className="page-container space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-secondary dark:text-white">Manager Overview</h2>
+          <p className="text-sm text-muted mt-1">Real-time team performance tracking</p>
+        </div>
+      </div>
+
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {loading
@@ -87,89 +78,57 @@ export default function ManagerDashboard() {
             ))}
       </div>
 
-      {/* Charts */}
       <div className="grid lg:grid-cols-3 gap-6">
+        {/* Chart */}
         <div className="lg:col-span-2">
           <Card>
-            <CardHeader><CardTitle>Team Weekly Progress</CardTitle></CardHeader>
+            <CardHeader><CardTitle>Team Progress Metrics</CardTitle></CardHeader>
             <CardBody>
-              <ResponsiveContainer width="100%" height={220}>
-                <BarChart data={barData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                  <XAxis dataKey="week" tick={{ fontSize: 12, fill: '#94A3B8' }} />
-                  <YAxis tick={{ fontSize: 12, fill: '#94A3B8' }} />
-                  <Tooltip contentStyle={{ borderRadius: 12, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }} />
-                  <Bar dataKey="goals" fill="#2563EB" radius={[6, 6, 0, 0]} name="Goals Completed" />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="h-[250px] w-full mt-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                    <YAxis axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={{ borderRadius: 12, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }} />
+                    <Bar dataKey="value" fill="#2563EB" radius={[10, 10, 0, 0]} barSize={50} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </CardBody>
           </Card>
         </div>
-        <Card>
-          <CardHeader><CardTitle>Goal Completion Rate</CardTitle></CardHeader>
-          <CardBody>
-            <ResponsiveContainer width="100%" height={220}>
-              <PieChart>
-                <Pie data={pieData} cx="50%" cy="50%" innerRadius={55} outerRadius={85} dataKey="value" paddingAngle={3}>
-                  {pieData.map((entry, i) => (
-                    <Cell key={i} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ borderRadius: 12, border: 'none' }} />
-                <Legend iconType="circle" iconSize={10} />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardBody>
-        </Card>
-      </div>
 
-      {/* Bottom row */}
-      <div className="grid lg:grid-cols-2 gap-6">
         {/* Intern list */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Interns</CardTitle>
+            <CardTitle>Team Members</CardTitle>
             <Link to="/manager/interns" className="text-xs text-primary-500 hover:text-primary-600 font-medium flex items-center gap-1">
               View all <ArrowRight size={12} />
             </Link>
           </CardHeader>
           <CardBody>
             <div className="space-y-3">
-              {interns.length === 0
-                ? [1,2,3,4].map((i) => (
-                    <div key={i} className="flex items-center gap-3 p-3 rounded-xl border border-border dark:border-gray-700">
-                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-bold">R</div>
-                      <div><p className="text-sm font-medium text-secondary dark:text-white">Demo Intern {i}</p><p className="text-xs text-muted">Engineering</p></div>
-                      <div className="ml-auto"><Badge variant="success">Active</Badge></div>
-                    </div>
-                  ))
-                : interns.map((intern) => (
-                    <Link key={intern._id} to={`/manager/interns/${intern._id}`} className="flex items-center gap-3 p-3 rounded-xl border border-border dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-bold">
-                        {intern.name?.charAt(0)}
-                      </div>
-                      <div><p className="text-sm font-medium text-secondary dark:text-white">{intern.name}</p><p className="text-xs text-muted">{intern.department}</p></div>
-                      <div className="ml-auto"><Badge variant="success">Active</Badge></div>
-                    </Link>
-                  ))}
-            </div>
-          </CardBody>
-        </Card>
-
-        {/* Activity feed */}
-        <Card>
-          <CardHeader><CardTitle>Recent Activity</CardTitle></CardHeader>
-          <CardBody>
-            <div className="space-y-4">
-              {activities.map((a, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <div className={`w-2 h-2 rounded-full ${a.color} mt-2 shrink-0`} />
-                  <div>
-                    <p className="text-sm text-secondary dark:text-gray-200">{a.text}</p>
-                    <p className="text-xs text-muted mt-0.5">{a.time}</p>
-                  </div>
+              {interns.length === 0 ? (
+                <div className="text-center py-12 text-muted">
+                  <p className="text-sm">No interns assigned yet.</p>
                 </div>
-              ))}
+              ) : (
+                interns.map((intern) => (
+                  <Link key={intern._id} to={`/manager/interns/${intern._id}`} className="flex items-center gap-3 p-3 rounded-xl border border-border dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-bold shadow-sm">
+                      {intern.name?.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-secondary dark:text-white">{intern.name}</p>
+                      <p className="text-xs text-muted">{intern.department || 'General'}</p>
+                    </div>
+                    <div className="ml-auto">
+                      <Badge variant="success">Active</Badge>
+                    </div>
+                  </Link>
+                ))
+              )}
             </div>
           </CardBody>
         </Card>
@@ -177,14 +136,14 @@ export default function ManagerDashboard() {
 
       {/* Quick actions */}
       <div className="grid sm:grid-cols-3 gap-4">
-        <Link to="/manager/goals/create" className="flex items-center gap-3 p-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl transition-all hover:shadow-glow">
+        <Link to="/manager/goals/create" className="flex items-center gap-3 p-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl transition-all hover:shadow-glow shadow-primary-500/20">
           <Target size={20} /> <span className="font-semibold text-sm">Create New Goal</span>
         </Link>
         <Link to="/manager/reviews" className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-border dark:border-gray-700 hover:shadow-hover text-secondary dark:text-white rounded-2xl transition-all">
-          <FileText size={20} className="text-warning" /> <span className="font-semibold text-sm">Review Reports ({stats.pendingReviews})</span>
+          <FileText size={20} className="text-warning" /> <span className="font-semibold text-sm">Review Queue ({stats.pendingReviews})</span>
         </Link>
         <Link to="/manager/analytics" className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-border dark:border-gray-700 hover:shadow-hover text-secondary dark:text-white rounded-2xl transition-all">
-          <Users size={20} className="text-primary-500" /> <span className="font-semibold text-sm">View Analytics</span>
+          <Users size={20} className="text-primary-500" /> <span className="font-semibold text-sm">Team Analytics</span>
         </Link>
       </div>
     </div>

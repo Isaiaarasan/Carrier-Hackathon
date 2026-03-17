@@ -21,10 +21,7 @@ export default function GoalDetail() {
     if (!id) return
     goalService.getGoalById(id)
       .then(res => setGoal(res.data.data || res.data))
-      .catch(() => setGoal({
-        _id: id, title: 'Build REST API with Express', description: 'Create a fully functional REST API using Express.js with proper authentication, error handling, and API documentation using Swagger.',
-        status: 'In-Progress', deadline: new Date().toISOString(), points: 50, week: 5,
-      }))
+      .catch(() => toast.error('Goal not found'))
       .finally(() => setLoading(false))
   }, [id])
 

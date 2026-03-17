@@ -61,15 +61,13 @@ export const changePassword = async (req, res) => {
   }
 };
 
-// @desc    Complete onboarding
-// @route   PUT /api/auth/onboard
-// @access  Private
+
 export const onboard = async (req, res) => {
   try {
     const { department, bio, avatar, skills } = req.body;
     const user = await User.findByIdAndUpdate(req.user.id, {
       department,
-      bio, // assuming bio field exists or can be added
+      bio,
       avatar,
       isOnboarded: true
     }, { new: true });

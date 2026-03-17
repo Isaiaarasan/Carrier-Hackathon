@@ -28,11 +28,7 @@ export default function GoalWizard() {
   useEffect(() => {
     userService.getInterns()
       .then(r => setInterns(r.data.data || r.data))
-      .catch(() => setInterns([
-        { _id: '1', name: 'Rahul Kumar', department: 'Engineering' },
-        { _id: '2', name: 'Priya Sharma', department: 'Design' },
-        { _id: '3', name: 'Arjun Nair', department: 'Marketing' },
-      ]))
+      .catch(() => toast.error('Failed to load interns'))
   }, [])
 
   const toggleIntern = (id: string) => {

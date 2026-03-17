@@ -10,7 +10,7 @@ import { authService } from '../../services/authService'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const { login } = useAuthStore()
+  const { setAuth } = useAuthStore()
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ email: '', password: '' })
@@ -21,7 +21,7 @@ export default function LoginPage() {
     try {
       const res = await authService.login(form.email, form.password)
       const { user, token } = res.data
-      login(user, token)
+      setAuth(user, token)
       toast.success(`Welcome back, ${user.name}!`)
       const dashboard =
         user.role === 'manager' ? '/manager/dashboard' :

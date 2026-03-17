@@ -8,21 +8,9 @@ import { Card, CardHeader, CardTitle, CardBody } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { StatCardSkeleton } from '../../components/ui/Skeleton'
 import { goalService } from '../../services/goalService'
-import { reportService } from '../../services/reportService'
 import { userService } from '../../services/userService'
 import { formatDate } from '../../utils/formatDate'
 import { goalStatusBadge } from '../../components/ui/Badge'
-
-const barData = [
-  { week: 'W1', completed: 2 }, { week: 'W2', completed: 4 },
-  { week: 'W3', completed: 3 }, { week: 'W4', completed: 5 },
-  { week: 'W5', completed: 4 }, { week: 'W6', completed: 6 },
-]
-const lineData = [
-  { week: 'W1', reports: 1 }, { week: 'W2', reports: 2 },
-  { week: 'W3', reports: 1 }, { week: 'W4', reports: 2 },
-  { week: 'W5', reports: 3 }, { week: 'W6', reports: 2 },
-]
 
 interface Stats {
   goalsAssigned: number
@@ -40,34 +28,44 @@ export default function InternDashboard() {
   useEffect(() => {
     const init = async () => {
       try {
-        const [goalsRes, progressRes] = await Promise.all([
+        const [goalsRes, analyticsRes] = await Promise.all([
           goalService.getMyGoals(),
-          userService.getInternProgress(user!._id),
+          // For intern, analytics can be scoped to them or we just calculate from goals
+          Promise.resolve({ data: { data: null } }) 
         ])
-        const g: any[] = goalsRes.data.data || goalsRes.data
+        
+        const g: any[] = goalsRes.data.data || goalsRes.data || []
         setGoals(g.slice(0, 5))
-        const p = progressRes.data.data || progressRes.data
+        
+        const completed = g.filter((x: any) => x.status === 'Approved').length
+        const pending = g.filter((x: any) => x.status === 'Submitted' || x.status === 'In-Progress').length
+        
         setStats({
-          goalsAssigned: p.goalsAssigned || g.length,
-          goalsCompleted: p.goalsCompleted || g.filter((x: any) => x.status === 'Approved').length,
-          pendingReports: p.pendingReports || 0,
-          overallScore: p.overallScore || 0,
+          goalsAssigned: g.length,
+          goalsCompleted: completed,
+          pendingReports: pending,
+          overallScore: g.length > 0 ? Math.round((completed / g.length) * 100) : 0,
         })
-      } catch {
-        // Use mock data on backend failure
-        setStats({ goalsAssigned: 8, goalsCompleted: 5, pendingReports: 2, overallScore: 74 })
+      } catch (err) {
+        console.error("Dashboard Load Error:", err)
       } finally {
         setLoading(false)
       }
     }
-    init()
+    if (user) init()
   }, [user])
 
   const statCards = [
     { label: 'Goals Assigned', value: stats.goalsAssigned, icon: Target, color: 'text-primary-500', bg: 'bg-primary-50 dark:bg-primary-900/20' },
     { label: 'Goals Completed', value: stats.goalsCompleted, icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
-    { label: 'Pending Submissions', value: stats.pendingReports, icon: Clock, color: 'text-warning', bg: 'bg-warning/10' },
-    { label: 'Overall Score', value: `${stats.overallScore}%`, icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+    { label: 'Active Tasks', value: stats.pendingReports, icon: Clock, color: 'text-warning', bg: 'bg-warning/10' },
+    { label: 'Success Rate', value: `${stats.overallScore}%`, icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+  ]
+
+  // Dynamic Chart Data from real goals
+  const chartData = [
+    { name: 'Completed', value: stats.goalsCompleted },
+    { name: 'Pending', value: stats.goalsAssigned - stats.goalsCompleted }
   ]
 
   return (
@@ -78,7 +76,7 @@ export default function InternDashboard() {
           Good morning, {user?.name?.split(' ')[0]} 👋
         </h2>
         <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-          Here's an overview of your internship progress
+          Here's your real-time internship progress
         </p>
       </motion.div>
 
@@ -106,34 +104,20 @@ export default function InternDashboard() {
       </div>
 
       {/* Charts row */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-1 gap-6">
         <Card>
-          <CardHeader><CardTitle>Weekly Productivity</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Goal Completion Overview</CardTitle></CardHeader>
           <CardBody>
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                <XAxis dataKey="week" tick={{ fontSize: 12, fill: '#94A3B8' }} />
-                <YAxis tick={{ fontSize: 12, fill: '#94A3B8' }} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }} />
-                <Bar dataKey="completed" fill="#2563EB" radius={[6, 6, 0, 0]} name="Goals Completed" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardHeader><CardTitle>Report Submission Trend</CardTitle></CardHeader>
-          <CardBody>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={lineData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                <XAxis dataKey="week" tick={{ fontSize: 12, fill: '#94A3B8' }} />
-                <YAxis tick={{ fontSize: 12, fill: '#94A3B8' }} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }} />
-                <Line type="monotone" dataKey="reports" stroke="#22C55E" strokeWidth={2.5} dot={{ fill: '#22C55E', r: 4 }} name="Reports" />
-              </LineChart>
-            </ResponsiveContainer>
+            <div className="h-[300px] w-full mt-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={chartData}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#2563EB" radius={[8, 8, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </CardBody>
         </Card>
       </div>
@@ -141,16 +125,17 @@ export default function InternDashboard() {
       {/* Recent Goals */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Goals</CardTitle>
+          <CardTitle>Upcoming & Active Goals</CardTitle>
           <Link to="/intern/goals" className="text-xs text-primary-500 hover:text-primary-600 font-medium flex items-center gap-1">
             View all <ArrowRight size={12} />
           </Link>
         </CardHeader>
         <CardBody>
           {goals.length === 0 ? (
-            <div className="text-center py-8 text-muted">
-              <Target size={32} className="mx-auto mb-2 opacity-30" />
-              <p className="text-sm">No goals assigned yet. Check back soon!</p>
+            <div className="text-center py-12 text-muted">
+              <Target size={48} className="mx-auto mb-4 opacity-20" />
+              <p className="text-base font-medium">No goals assigned yet.</p>
+              <p className="text-sm">Once a manager assigns tasks, they'll appear here.</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -160,9 +145,14 @@ export default function InternDashboard() {
                   to={`/intern/goals/${goal._id}`}
                   className="flex items-center justify-between p-4 rounded-xl border border-border dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors group"
                 >
-                  <div>
-                    <p className="text-sm font-medium text-secondary dark:text-white group-hover:text-primary-500 transition-colors">{goal.title}</p>
-                    <p className="text-xs text-muted mt-0.5">Due {formatDate(goal.deadline)}</p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-primary-500">
+                      <Target size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-secondary dark:text-white group-hover:text-primary-500 transition-colors">{goal.title}</p>
+                      <p className="text-xs text-muted mt-0.5">Due {formatDate(goal.deadline)}</p>
+                    </div>
                   </div>
                   <Badge variant={goalStatusBadge(goal.status)}>{goal.status}</Badge>
                 </Link>
