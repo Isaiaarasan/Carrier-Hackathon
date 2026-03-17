@@ -3,8 +3,8 @@ import User from '../models/User.model.js';
 import Goal from '../models/Goal.model.js';
 import Notification from '../models/Notification.model.js';
 
-// Every Friday at 6:00 PM - Notify interns with pending reports
 export const initCronJobs = () => {
+  // Every Friday at 6:00 PM - Notify interns with pending reports
   cron.schedule('0 18 * * 5', async () => {
     console.log('Running Friday Reminder Cron...');
     try {
@@ -37,6 +37,32 @@ export const initCronJobs = () => {
       }
     } catch (err) {
       console.error('Monday Cron Error:', err);
+    }
+  });
+
+  // Check for Overdue Tasks - Every hour
+  cron.schedule('0 * * * *', async () => {
+    console.log('Running Overdue Task Check Cron...');
+    try {
+      const now = new Date();
+      const overdueGoals = await Goal.find({
+        deadline: { $lt: now },
+        status: { $nin: ['Approved', 'Submitted'] }
+      });
+
+      for (const goal of overdueGoals) {
+        // Send notification to each assigned intern if not already notified for overdue
+        // For simplicity in hackathon, just send it once an hour if it's still overdue
+        for (const internId of goal.assignedTo) {
+          await Notification.create({
+            recipient: internId,
+            type: 'reminder',
+            message: `URGENT: Your task "${goal.title}" is overdue! Please complete it immediately.`,
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Overdue Cron Error:', err);
     }
   });
 };

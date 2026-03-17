@@ -2,22 +2,23 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 interface User {
-  _id: string
+  id: string
   name: string
   email: string
   role: 'intern' | 'manager' | 'admin'
-  avatar?: string
   department?: string
-  cohort?: string
+  isPasswordChanged: boolean
+  isOnboarded: boolean
+  bio?: string
 }
 
 interface AuthState {
   user: User | null
   token: string | null
   isAuthenticated: boolean
-  login: (user: User, token: string) => void
+  setAuth: (user: User, token: string) => void
   logout: () => void
-  updateUser: (updates: Partial<User>) => void
+  updateUser: (userData: Partial<User>) => void
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -26,22 +27,18 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       isAuthenticated: false,
-
-      login: (user, token) => {
-        localStorage.setItem('token', token)
-        set({ user, token, isAuthenticated: true })
-      },
-
+      setAuth: (user, token) => set({ user, token, isAuthenticated: true }),
       logout: () => {
-        localStorage.removeItem('token')
         set({ user: null, token: null, isAuthenticated: false })
+        localStorage.removeItem('auth-storage')
       },
-
-      updateUser: (updates) =>
+      updateUser: (userData) =>
         set((state) => ({
-          user: state.user ? { ...state.user, ...updates } : null,
+          user: state.user ? { ...state.user, ...userData } : null,
         })),
     }),
-    { name: 'internpulse-auth' }
+    {
+      name: 'auth-storage',
+    }
   )
 )

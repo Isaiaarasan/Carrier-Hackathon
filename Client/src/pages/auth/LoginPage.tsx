@@ -134,10 +134,7 @@ export default function LoginPage() {
           </form>
 
           <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-primary-500 hover:text-primary-600 font-semibold">
-              Create one
-            </Link>
+            Protected by enterprise-grade security.
           </p>
         </div>
       </motion.div>

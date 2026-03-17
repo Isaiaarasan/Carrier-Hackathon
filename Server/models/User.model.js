@@ -26,6 +26,14 @@ const userSchema = new mongoose.Schema({
   avatar: String,
   department: String,
   cohort: String,
+  isPasswordChanged: {
+    type: Boolean,
+    default: false,
+  },
+  isOnboarded: {
+    type: Boolean,
+    default: false,
+  },
   isActive: {
     type: Boolean,
     default: true,

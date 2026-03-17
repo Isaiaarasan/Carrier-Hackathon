@@ -1,18 +1,14 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useThemeStore } from '../stores/themeStore'
-
-// Layout
+import { Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
 import ProtectedRoute from '../components/layout/ProtectedRoute'
 
 // Auth Pages
 import LandingPage from '../pages/auth/LandingPage'
 import LoginPage from '../pages/auth/LoginPage'
-import RegisterPage from '../pages/auth/RegisterPage'
 import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage'
 import RoleSelectionPage from '../pages/auth/RoleSelectionPage'
 import ProfileSetupPage from '../pages/auth/ProfileSetupPage'
+import ChangePasswordPage from '../pages/auth/ChangePasswordPage'
 
 // Intern Pages
 import InternDashboard from '../pages/intern/InternDashboard'
@@ -41,79 +37,79 @@ import SystemSettings from '../pages/admin/SystemSettings'
 import NotificationsCenter from '../pages/common/NotificationsCenter'
 import SettingsPage from '../pages/common/SettingsPage'
 import HelpSupport from '../pages/common/HelpSupport'
-import NotFoundPage from '../pages/common/NotFoundPage'
 import KanbanBoard from '../pages/common/KanbanBoard'
 import CalendarView from '../pages/common/CalendarView'
+import NotFoundPage from '../pages/common/NotFoundPage'
 
 export default function AppRouter() {
-  const { isDark } = useThemeStore()
-
-  useEffect(() => {
-    if (isDark) document.documentElement.classList.add('dark')
-    else document.documentElement.classList.remove('dark')
-  }, [isDark])
-
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/role-select" element={<RoleSelectionPage />} />
-        <Route path="/profile-setup" element={<ProfileSetupPage />} />
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-        {/* Intern Routes */}
-        <Route element={<ProtectedRoute allowedRoles={['intern']} />}>
-          <Route element={<AppLayout />}>
-            <Route path="/intern/dashboard" element={<InternDashboard />} />
-            <Route path="/intern/goals" element={<GoalsList />} />
-            <Route path="/intern/goals/:id" element={<GoalDetail />} />
-            <Route path="/intern/reports/new" element={<ReportEditor />} />
-            <Route path="/intern/reports/history" element={<SubmissionHistory />} />
-            <Route path="/intern/reports/:id/feedback" element={<FeedbackView />} />
-            <Route path="/intern/leaderboard" element={<Leaderboard />} />
-          </Route>
-        </Route>
+      {/* Mandatory Auth Flows */}
+      <Route 
+        path="/change-password" 
+        element={
+          <ProtectedRoute>
+            <ChangePasswordPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/profile-setup" 
+        element={
+          <ProtectedRoute>
+            <ProfileSetupPage />
+          </ProtectedRoute>
+        } 
+      />
 
-        {/* Manager Routes */}
-        <Route element={<ProtectedRoute allowedRoles={['manager']} />}>
-          <Route element={<AppLayout />}>
-            <Route path="/manager/dashboard" element={<ManagerDashboard />} />
-            <Route path="/manager/interns" element={<InternList />} />
-            <Route path="/manager/interns/:id" element={<InternProfile />} />
-            <Route path="/manager/goals/create" element={<GoalWizard />} />
-            <Route path="/manager/reviews" element={<ReviewQueue />} />
-            <Route path="/manager/analytics" element={<AnalyticsReports />} />
-          </Route>
-        </Route>
+      {/* Intern Portal */}
+      <Route path="/intern" element={<ProtectedRoute allowedRoles={['intern']}><AppLayout /></ProtectedRoute>}>
+        <Route path="dashboard" element={<InternDashboard />} />
+        <Route path="goals" element={<GoalsList />} />
+        <Route path="goals/:id" element={<GoalDetail />} />
+        <Route path="reports/new" element={<ReportEditor />} />
+        <Route path="reports/history" element={<SubmissionHistory />} />
+        <Route path="reports/:id/feedback" element={<FeedbackView />} />
+        <Route path="leaderboard" element={<Leaderboard />} />
+      </Route>
 
-        {/* Admin Routes */}
-        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-          <Route element={<AppLayout />}>
-            <Route path="/admin/users" element={<UserManagement />} />
-            <Route path="/admin/cohorts" element={<CohortCreation />} />
-            <Route path="/admin/notification-logs" element={<NotificationLogs />} />
-            <Route path="/admin/settings" element={<SystemSettings />} />
-          </Route>
-        </Route>
+      {/* Manager Portal */}
+      <Route path="/manager" element={<ProtectedRoute allowedRoles={['manager']}><AppLayout /></ProtectedRoute>}>
+        <Route path="dashboard" element={<ManagerDashboard />} />
+        <Route path="interns" element={<InternList />} />
+        <Route path="interns/:id" element={<InternProfile />} />
+        <Route path="goals/create" element={<GoalWizard />} />
+        <Route path="reviews" element={<ReviewQueue />} />
+        <Route path="analytics" element={<AnalyticsReports />} />
+      </Route>
 
-        {/* Common Routes (any authenticated user) */}
-        <Route element={<ProtectedRoute />}>
-          <Route element={<AppLayout />}>
-            <Route path="/notifications" element={<NotificationsCenter />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/help" element={<HelpSupport />} />
-            <Route path="/kanban" element={<KanbanBoard />} />
-            <Route path="/calendar" element={<CalendarView />} />
-          </Route>
-        </Route>
+      {/* Admin Portal */}
+      <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><AppLayout /></ProtectedRoute>}>
+        <Route path="users" element={<UserManagement />} />
+        <Route path="cohorts" element={<CohortCreation />} />
+        <Route path="logs" element={<NotificationLogs />} />
+        <Route path="settings" element={<SystemSettings />} />
+      </Route>
 
-        {/* Fallback */}
-        <Route path="/404" element={<NotFoundPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+      {/* Common / Shared Layout Routes */}
+      <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
+        <Route path="notifications" element={<NotificationsCenter />} />
+        <Route path="settings" element={<SettingsPage />} />
+        <Route path="help" element={<HelpSupport />} />
+        <Route path="kanban" element={<KanbanBoard />} />
+        <Route path="calendar" element={<CalendarView />} />
+      </Route>
+
+      {/* Helper Redirects */}
+      <Route path="/role-selection" element={<RoleSelectionPage />} />
+      
+      {/* 404 */}
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   )
 }
