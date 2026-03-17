@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useAuthStore } from '../../stores/authStore'
 import {
   Target, BarChart3, FileText, Zap, Users, Trophy, Bell, ArrowRight,
   CheckCircle, ChevronRight, Star
@@ -29,6 +31,19 @@ const stats = [
 ]
 
 export default function LandingPage() {
+  const navigate = useNavigate()
+  const { isAuthenticated, user } = useAuthStore()
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const dashboard =
+        user.role === 'manager' ? '/manager/dashboard' :
+        user.role === 'admin'   ? '/admin/users' :
+        '/intern/dashboard'
+      navigate(dashboard)
+    }
+  }, [isAuthenticated, user, navigate])
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 font-sans">
       {/* Navbar */}
@@ -46,9 +61,9 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link to="/login" className="text-secondary dark:text-gray-300 hover:text-primary-500 font-semibold transition-colors">Login</Link>
-            <Link to="/login" className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-3 rounded-2xl transition-all hover:shadow-glow">
+            {/* <Link to="/login" className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-3 rounded-2xl transition-all hover:shadow-glow">
               Get Started
-            </Link>
+            </Link> */}
           </div>
         </div>
       </nav>
@@ -80,9 +95,9 @@ export default function LandingPage() {
               The complete platform for managers to assign goals, track intern progress, and review weekly reports — all in one beautiful dashboard.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/login" className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-4 rounded-2xl text-lg transition-all hover:scale-105 hover:shadow-glow inline-flex items-center gap-2">
+              {/* <Link to="/login" className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-4 rounded-2xl text-lg transition-all hover:scale-105 hover:shadow-glow inline-flex items-center gap-2">
               Get Started for Free <ArrowRight size={20} />
-            </Link>
+            </Link> */}
               <Link
                 to="/login"
                 className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-secondary dark:text-white font-semibold px-8 py-4 rounded-2xl border border-border dark:border-gray-700 transition-all duration-150 text-base"
@@ -187,10 +202,10 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/register"
+              to="/login"
               className="bg-white text-primary-600 font-semibold px-8 py-4 rounded-2xl hover:bg-primary-50 transition-all duration-150 flex items-center gap-2 justify-center"
             >
-              Get Started Free <ArrowRight size={18} />
+              Sign In to Start <ArrowRight size={18} />
             </Link>
             <Link
               to="/login"

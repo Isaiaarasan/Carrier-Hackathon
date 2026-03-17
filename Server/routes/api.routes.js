@@ -7,7 +7,7 @@ import {
   onboard, 
   adminCreateUser 
 } from '../controllers/auth.controller.js';
-import { getAnalytics, getLeaderboard } from '../controllers/users.controller.js';
+import { getAnalytics, getLeaderboard, getInterns, getInternProgress } from '../controllers/users.controller.js';
 import { createGoal, getGoals, updateGoalStatus } from '../controllers/goals.controller.js';
 import { submitReport, getReviewQueue, reviewReport } from '../controllers/reports.controller.js';
 import User from '../models/User.model.js';
@@ -35,18 +35,15 @@ router.get('/reports/queue', protect, authorize('manager', 'admin'), getReviewQu
 router.patch('/reports/:id/review', protect, authorize('manager', 'admin'), reviewReport);
 
 // User Routes
-router.get('/users/interns', protect, authorize('manager', 'admin'), async (req, res) => {
-  const interns = await User.find({ role: 'intern' });
-  res.status(200).json({ success: true, data: interns });
-});
+router.get('/users/interns', protect, authorize('manager', 'admin'), getInterns);
 
 router.get('/users', protect, authorize('admin'), async (req, res) => {
   const users = await User.find({});
   res.status(200).json({ success: true, data: users });
 });
-
 router.get('/users/analytics', protect, authorize('manager', 'admin'), getAnalytics);
 router.get('/users/leaderboard', protect, getLeaderboard);
+router.get('/users/:id/progress', protect, getInternProgress);
 
 // Notification Routes
 router.get('/notifications', protect, async (req, res) => {

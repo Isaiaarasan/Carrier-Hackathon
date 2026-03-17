@@ -27,7 +27,7 @@ export default function ReviewQueue() {
   useEffect(() => {
     reportService.getReviewQueue()
       .then(r => setReports(r.data.data || r.data))
-      .catch(() => setReports(mockReports))
+      .catch(() => toast.error('Failed to load review queue'))
       .finally(() => setLoading(false))
   }, [])
 

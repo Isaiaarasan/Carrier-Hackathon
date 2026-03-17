@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
@@ -10,10 +10,20 @@ import { authService } from '../../services/authService'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const { setAuth } = useAuthStore()
+  const { setAuth, isAuthenticated, user } = useAuthStore()
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ email: '', password: '' })
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const dashboard =
+        user.role === 'manager' ? '/manager/dashboard' :
+        user.role === 'admin'   ? '/admin/users' :
+        '/intern/dashboard'
+      navigate(dashboard)
+    }
+  }, [isAuthenticated, user, navigate])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,9 +47,9 @@ export default function LoginPage() {
 
   const handleDemoLogin = (role: 'manager' | 'intern' | 'admin') => {
     const demoAccounts = {
-      manager: { email: 'manager@demo.com', password: 'demo123' },
-      intern:  { email: 'intern@demo.com',  password: 'demo123' },
-      admin:   { email: 'admin@demo.com',   password: 'demo123' },
+      manager: { email: 'manager@internpulse.com', password: 'manager123' },
+      intern:  { email: 'intern@internpulse.com',  password: 'intern123' },
+      admin:   { email: 'admin@internpulse.com',   password: 'admin123' },
     }
     setForm(demoAccounts[role])
   }

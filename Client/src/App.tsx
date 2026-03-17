@@ -1,9 +1,10 @@
+import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './router/AppRouter'
 import { Toaster } from 'react-hot-toast'
 
 export default function App() {
   return (
-    <>
+    <BrowserRouter>
       <AppRouter />
       <Toaster
         position="top-right"
@@ -24,6 +25,6 @@ export default function App() {
           },
         }}
       />
-    </>
+    </BrowserRouter>
   )
 }
