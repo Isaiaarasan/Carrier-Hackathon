@@ -6,48 +6,49 @@
 
 /* ─────────────────────────────────────────────────
    CSS DESIGN TOKENS — Light Mode (default)
+   Colors: White (#FFFFFF) and Cream (#FFF2D0)
 ───────────────────────────────────────────────── */
 :root {
-  --bg-base:         #F4F2FF;
+  --bg-base:         #FFFBF0;
   --bg-surface:      #FFFFFF;
-  --bg-surface-2:    #F0ECFF;
-  --bg-surface-3:    #E8E2FF;
+  --bg-surface-2:    #FFF9E6;
+  --bg-surface-3:    #FFF2D0;
 
-  --border-color:    rgba(124, 58, 237, 0.15);
-  --border-strong:   rgba(124, 58, 237, 0.35);
+  --border-color:    rgba(212, 188, 130, 0.15);
+  --border-strong:   rgba(212, 188, 130, 0.35);
 
-  --text-primary:    #1a1040;
-  --text-secondary:  #4B3E7A;
-  --text-muted:      #9585C8;
+  --text-primary:    #1F1100;
+  --text-secondary:  #5C4B2E;
+  --text-muted:      #A89968;
   --text-invert:     #FFFFFF;
 
   --card-bg:         #FFFFFF;
-  --card-shadow:     0 4px 24px rgba(124, 58, 237, 0.08), 0 1px 4px rgba(0,0,0,0.04);
-  --card-shadow-hover: 0 8px 40px rgba(124, 58, 237, 0.18), 0 2px 8px rgba(0,0,0,0.06);
+  --card-shadow:     0 4px 24px rgba(212, 188, 130, 0.08), 0 1px 4px rgba(0,0,0,0.04);
+  --card-shadow-hover: 0 8px 40px rgba(212, 188, 130, 0.18), 0 2px 8px rgba(0,0,0,0.06);
 
   --input-bg:        #FFFFFF;
-  --input-border:    rgba(124, 58, 237, 0.2);
-  --input-focus:     rgba(124, 58, 237, 0.35);
+  --input-border:    rgba(212, 188, 130, 0.2);
+  --input-focus:     rgba(212, 188, 130, 0.35);
 
   --sidebar-bg:      #FFFFFF;
-  --sidebar-border:  rgba(124, 58, 237, 0.1);
-  --sidebar-item-hover: rgba(124, 58, 237, 0.07);
-  --sidebar-item-active-bg: rgba(124, 58, 237, 0.1);
-  --sidebar-item-active-border: rgba(124, 58, 237, 0.25);
-  --sidebar-item-color: #7C5CBF;
-  --sidebar-item-active-color: #5B21B6;
+  --sidebar-border:  rgba(212, 188, 130, 0.1);
+  --sidebar-item-hover: rgba(212, 188, 130, 0.07);
+  --sidebar-item-active-bg: rgba(212, 188, 130, 0.1);
+  --sidebar-item-active-border: rgba(212, 188, 130, 0.25);
+  --sidebar-item-color: #D4BC82;
+  --sidebar-item-active-color: #B8860B;
 
   --header-bg:       rgba(255,255,255,0.85);
-  --header-border:   rgba(124, 58, 237, 0.1);
+  --header-border:   rgba(212, 188, 130, 0.1);
 
-  --primary:         #7C3AED;
-  --primary-hover:   #6D28D9;
+  --primary:         #D4AF37;
+  --primary-hover:   #B8860B;
   --accent:          #06D6A0;
   --danger:          #EF233C;
   --warning:         #FFB703;
   --success:         #06D6A0;
 
-  --scrollbar-thumb: rgba(124, 58, 237, 0.25);
+  --scrollbar-thumb: rgba(212, 188, 130, 0.25);
   --scrollbar-hover: rgba(124, 58, 237, 0.4);
 }
 
@@ -60,35 +61,35 @@
   --bg-surface-2:    #1E1E35;
   --bg-surface-3:    #252540;
 
-  --border-color:    rgba(124, 58, 237, 0.15);
-  --border-strong:   rgba(124, 58, 237, 0.35);
+  --border-color:    rgba(212, 188, 130, 0.15);
+  --border-strong:   rgba(212, 188, 130, 0.35);
 
   --text-primary:    #F8F8FF;
-  --text-secondary:  #C4B5FD;
+  --text-secondary:  #DCC89C;
   --text-muted:      rgba(248, 248, 255, 0.45);
   --text-invert:     #0F0F1A;
 
   --card-bg:         #1A1A2E;
   --card-shadow:     0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
-  --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,58,237,0.3);
+  --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,188,130,0.3);
 
   --input-bg:        rgba(26,26,46,0.8);
-  --input-border:    rgba(124, 58, 237, 0.2);
-  --input-focus:     rgba(124, 58, 237, 0.4);
+  --input-border:    rgba(212, 188, 130, 0.2);
+  --input-focus:     rgba(212, 188, 130, 0.4);
 
   --sidebar-bg:      #0F0F1A;
-  --sidebar-border:  rgba(124, 58, 237, 0.12);
-  --sidebar-item-hover: rgba(124, 58, 237, 0.12);
-  --sidebar-item-active-bg: rgba(124, 58, 237, 0.22);
-  --sidebar-item-active-border: rgba(124, 58, 237, 0.3);
+  --sidebar-border:  rgba(212, 188, 130, 0.12);
+  --sidebar-item-hover: rgba(212, 188, 130, 0.12);
+  --sidebar-item-active-bg: rgba(212, 188, 130, 0.22);
+  --sidebar-item-active-border: rgba(212, 188, 130, 0.3);
   --sidebar-item-color: rgba(248, 248, 255, 0.5);
-  --sidebar-item-active-color: #C4B5FD;
+  --sidebar-item-active-color: #DCC89C;
 
   --header-bg:       rgba(15,15,26,0.85);
-  --header-border:   rgba(124, 58, 237, 0.12);
+  --header-border:   rgba(212, 188, 130, 0.12);
 
-  --scrollbar-thumb: rgba(124, 58, 237, 0.3);
-  --scrollbar-hover: rgba(124, 58, 237, 0.5);
+  --scrollbar-thumb: rgba(212, 188, 130, 0.3);
+  --scrollbar-hover: rgba(212, 188, 130, 0.5);
 }
 
 /* ─────────────────────────────────────────────────
