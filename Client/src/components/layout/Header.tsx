@@ -43,7 +43,7 @@ export default function Header({ title = 'Dashboard' }: HeaderProps) {
         />
         <kbd
           className="hidden lg:flex items-center text-[10px] px-1.5 py-0.5 rounded-md font-mono"
-          style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.15)', color: 'var(--primary)' }}>
+          style={{ background: 'rgba(var(--primary-rgb), 0.1)', border: '1px solid rgba(var(--primary-rgb), 0.15)', color: 'var(--primary)' }}>
           ⌘K
         </kbd>
       </div>
@@ -66,7 +66,7 @@ export default function Header({ title = 'Dashboard' }: HeaderProps) {
         <button
           onClick={() => setIsChatOpen(true)}
           className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
-          style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)' }}
+          style={{ background: 'rgba(var(--primary-rgb), 0.1)', border: '1px solid rgba(var(--primary-rgb), 0.2)' }}
           title="AI Assistant">
           <Sparkles size={16} style={{ color: 'var(--primary)' }} />
         </button>
@@ -92,8 +92,8 @@ export default function Header({ title = 'Dashboard' }: HeaderProps) {
         {/* Avatar */}
         <Link to="/settings" className="flex items-center gap-2.5 pl-2">
           <div
-            className="w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold text-white"
-            style={{ background: 'linear-gradient(135deg, #7C3AED, #4F46E5)', boxShadow: '0 0 12px rgba(124,58,237,0.35)' }}>
+            className="w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold text-white shadow-glow"
+            style={{ background: 'var(--primary)' }}>
             {user?.name?.charAt(0).toUpperCase()}
           </div>
           <div className="hidden md:block">

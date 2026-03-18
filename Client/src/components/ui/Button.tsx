@@ -40,9 +40,9 @@ function getVariantStyle(v: string): React.CSSProperties {
   switch (v) {
     case 'primary':
       return {
-        background: 'linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)',
+        background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)',
         color: '#fff',
-        boxShadow: '0 4px 15px rgba(124,58,237,0.35)',
+        boxShadow: '0 4px 15px rgba(var(--primary-rgb), 0.35)',
       }
     case 'secondary':
       return {
@@ -80,7 +80,7 @@ function getVariantStyle(v: string): React.CSSProperties {
 
 function getHoverStyle(v: string): React.CSSProperties {
   switch (v) {
-    case 'primary':     return { background: 'linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%)', boxShadow: '0 6px 25px rgba(124,58,237,0.55)', transform: 'translateY(-1px)' }
+    case 'primary':     return { background: 'linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%)', boxShadow: '0 6px 25px rgba(var(--primary-rgb), 0.55)', transform: 'translateY(-1px)' }
     case 'secondary':   return { background: 'var(--bg-surface-3)', borderColor: 'var(--border-strong)' }
     case 'ghost':       return { background: 'rgba(124,58,237,0.08)', color: 'var(--primary)' }
     case 'destructive': return { background: 'rgba(239,35,60,0.18)' }

@@ -36,6 +36,8 @@ export default {
         border: 'var(--border-color)',
         background: 'var(--bg-base)',
         card: 'var(--card-bg)',
+        input: 'var(--input-bg)',
+        inputBorder: 'var(--input-border)',
         primaryText: 'var(--text-primary)',
       },
       fontFamily: {
@@ -49,12 +51,12 @@ export default {
         '4xl': '2rem',
       },
       boxShadow: {
-        card:   '0 0 0 1px rgba(124,58,237,0.12), 0 4px 24px 0 rgba(0,0,0,0.4)',
-        hover:  '0 0 0 1px rgba(124,58,237,0.3), 0 8px 40px 0 rgba(124,58,237,0.2)',
-        glow:   '0 0 30px rgba(124,58,237,0.5)',
-        'glow-accent': '0 0 30px rgba(6,214,160,0.4)',
+        card:   '0 4px 24px 0 rgba(0,0,0,0.05)',
+        hover:  '0 8px 40px 0 rgba(0,0,0,0.1)',
+        glow:   '0 0 30px var(--primary)',
+        'glow-accent': '0 0 30px var(--accent)',
         inner:  'inset 0 1px 0 rgba(255,255,255,0.05)',
-        neon:   '0 0 20px rgba(124,58,237,0.6), 0 0 60px rgba(124,58,237,0.2)',
+        neon:   '0 0 20px var(--primary), 0 0 60px rgba(124,58,237,0.1)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

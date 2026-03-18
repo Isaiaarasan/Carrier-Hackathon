@@ -90,15 +90,15 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
               className="px-6 py-4 flex items-center justify-between border-b"
               style={{
                 borderColor: "var(--border-color)",
-                background: "linear-gradient(135deg, rgba(124,58,237,0.1), rgba(79,70,229,0.05))",
+                background: "linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-hover-rgb), 0.05))",
               }}
             >
               <div className="flex items-center gap-3">
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{
-                    background: "linear-gradient(135deg, #7C3AED, #4F46E5)",
-                    boxShadow: "0 4px 12px rgba(124,58,237,0.3)",
+                    background: "linear-gradient(135deg, var(--primary), var(--primary-hover))",
+                    boxShadow: "0 4px 12px rgba(var(--primary-rgb), 0.3)",
                   }}
                 >
                   <Sparkles size={20} className="text-white" />
@@ -141,10 +141,14 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
                 >
                   <div
                     className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
-                      msg.role === "assistant"
-                        ? "bg-purple-600/10 text-purple-600 dark:text-purple-400"
-                        : "bg-slate-500/10 text-slate-500"
-                    }`}
+                    msg.role === "assistant"
+                      ? "bg-primary/10 text-primary-strong"
+                      : "bg-slate-500/10 text-slate-500"
+                  }`}
+                  style={{
+                    backgroundColor: msg.role === "assistant" ? "rgba(var(--primary-rgb), 0.1)" : undefined,
+                    color: msg.role === "assistant" ? "var(--primary)" : undefined
+                  }}
                   >
                     {msg.role === "assistant" ? <Bot size={16} /> : <User size={16} />}
                   </div>
@@ -173,7 +177,7 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
                     className="rounded-2xl rounded-tl-none px-4 py-3 flex items-center gap-2"
                     style={{ background: "var(--bg-surface-2)", border: "1px solid var(--border-color)" }}
                   >
-                    <Loader2 size={16} className="animate-spin text-purple-600 dark:text-purple-400" />
+                    <Loader2 size={16} className="animate-spin" style={{ color: "var(--primary)" }} />
                     <span className="text-xs" style={{ color: "var(--text-muted)" }}>
                       AI is thinking...
                     </span>

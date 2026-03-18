@@ -26,17 +26,17 @@
   --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --card-shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-  --input-bg: #ffffff;
-  --input-border: #e2e8f0;
-  --input-focus: #7c3aed;
+  --input-bg: var(--bg-surface);
+  --input-border: var(--bg-surface-3);
+  --input-focus: var(--primary);
 
-  --sidebar-bg: #ffffff;
-  --sidebar-border: #f1f5f9;
-  --sidebar-item-hover: #f8fafc;
-  --sidebar-item-active-bg: #f5f3ff;
-  --sidebar-item-active-border: #ddd6fe;
-  --sidebar-item-color: #64748b;
-  --sidebar-item-active-color: #7c3aed;
+  --sidebar-bg: var(--bg-surface);
+  --sidebar-border: var(--border-color);
+  --sidebar-item-hover: var(--bg-surface-2);
+  --sidebar-item-active-bg: rgba(var(--primary-rgb), 0.1);
+  --sidebar-item-active-border: rgba(var(--primary-rgb), 0.2);
+  --sidebar-item-color: var(--text-muted);
+  --sidebar-item-active-color: var(--primary);
 
   --header-bg: rgba(255, 255, 255, 0.85);
   --header-border: #f1f5f9;
@@ -74,15 +74,15 @@
   --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --card-shadow-hover: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
-  --input-bg: #0f172a;
-  --input-border: #1e293b;
-  --input-focus: #7c3aed;
+  --input-bg: var(--bg-surface);
+  --input-border: var(--bg-surface-3);
+  --input-focus: var(--primary);
 
-  --sidebar-bg: #020617;
-  --sidebar-border: #0f172a;
-  --sidebar-item-hover: #0f172a;
-  --sidebar-item-active-bg: #1e293b;
-  --sidebar-item-active-border: #334155;
+  --sidebar-bg: var(--bg-base);
+  --sidebar-border: var(--bg-surface);
+  --sidebar-item-hover: var(--bg-surface);
+  --sidebar-item-active-bg: var(--bg-surface-2);
+  --sidebar-item-active-border: var(--bg-surface-3);
   --sidebar-item-color: #94a3b8;
   --sidebar-item-active-color: #f8fafc;
 

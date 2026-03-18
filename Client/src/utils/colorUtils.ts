@@ -73,7 +73,17 @@ export const getContrastColor = (hex: string): string => {
  */
 export const applyPrimaryColor = (primaryColor: string) => {
   const root = document.documentElement;
+  const rgb = hexToRgb(primaryColor);
 
   root.style.setProperty("--primary", primaryColor);
-  root.style.setProperty("--primary-hover", darkenColor(primaryColor, 20));
+  root.style.setProperty("--primary-hover", darkenColor(primaryColor, 15));
+
+  if (rgb) {
+    root.style.setProperty("--primary-rgb", `${rgb.r}, ${rgb.g}, ${rgb.b}`);
+    const hoverColor = darkenColor(primaryColor, 15);
+    const hoverRgb = hexToRgb(hoverColor);
+    if (hoverRgb) {
+      root.style.setProperty("--primary-hover-rgb", `${hoverRgb.r}, ${hoverRgb.g}, ${hoverRgb.b}`);
+    }
+  }
 };
