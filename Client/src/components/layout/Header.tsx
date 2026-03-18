@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useThemeStore } from '../../stores/themeStore'
 import { useNotifStore } from '../../stores/notifStore'
 import { useAuthStore } from '../../stores/authStore'
+import { useState } from 'react'
+import AIChatPanel from './AIChatPanel'
 
 interface HeaderProps { title?: string }
 
@@ -10,6 +12,7 @@ export default function Header({ title = 'Dashboard' }: HeaderProps) {
   const { toggle, isDark } = useThemeStore()
   const { unreadCount } = useNotifStore()
   const { user } = useAuthStore()
+  const [isChatOpen, setIsChatOpen] = useState(false)
 
   return (
     <header
@@ -61,11 +64,15 @@ export default function Header({ title = 'Dashboard' }: HeaderProps) {
 
         {/* AI Button */}
         <button
-          className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200"
+          onClick={() => setIsChatOpen(true)}
+          className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
           style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)' }}
           title="AI Assistant">
           <Sparkles size={16} style={{ color: 'var(--primary)' }} />
         </button>
+
+        {/* AI Chat Panel */}
+        <AIChatPanel isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
         {/* Notifications */}
         <Link

@@ -1,5 +1,6 @@
 import express from "express";
 import { protect, authorize } from "../middleware/auth.middleware.js";
+import aiRoutes from "./ai.routes.js";
 import {
   login,
   getMe,
@@ -51,6 +52,7 @@ router.post("/auth/login", login);
 router.get("/auth/me", protect, getMe);
 router.put("/auth/change-password", protect, changePassword);
 router.put("/auth/onboard", protect, onboard);
+router.use("/ai", aiRoutes);
 
 // Admin Only - Create User
 router.post("/auth/create-user", protect, authorize("admin"), adminCreateUser);
@@ -215,7 +217,7 @@ router.patch(
 );
 
 // Theme Routes
-router.get("/theme", protect, getTheme);
+router.get("/theme", getTheme);
 router.patch("/theme", protect, authorize("admin"), updateTheme);
 router.post("/theme/reset", protect, authorize("admin"), resetTheme);
 

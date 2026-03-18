@@ -97,7 +97,7 @@ export default function AppRouter() {
       </Route>
 
       {/* Common / Shared Layout Routes */}
-      <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
+      <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
         <Route path="notifications" element={<NotificationsCenter />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="help" element={<HelpSupport />} />

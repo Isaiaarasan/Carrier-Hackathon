@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        // New premium purple/violet palette
         primary: {
-          DEFAULT: '#7C3AED',
+          DEFAULT: 'var(--primary)',
+          hover: 'var(--primary-hover)',
           50:  '#F5F3FF',
           100: '#EDE9FE',
           200: '#DDD6FE',
@@ -22,24 +22,21 @@ export default {
           800: '#4C1D95',
           900: '#2E1065',
         },
-        // Surface/dark shades
         surface: {
-          DEFAULT: '#0F0F1A',
-          50:  '#1A1A2E',
-          100: '#16213E',
-          200: '#1E1E35',
-          300: '#252540',
-          400: '#2D2D50',
+          DEFAULT: 'var(--bg-surface)',
+          50:  'var(--bg-surface-2)',
+          100: 'var(--bg-surface-3)',
         },
-        secondary: '#F8F8FF',
-        accent: '#06D6A0',        // Cyan-green accent
-        warning: '#FFB703',
-        danger: '#EF233C',
-        success: '#06D6A0',
-        muted: '#8888AA',
-        border: '#2D2D50',
-        background: '#0F0F1A',
-        card: '#1A1A2E',
+        secondary: 'var(--text-secondary)',
+        accent: 'var(--accent)',
+        warning: 'var(--warning)',
+        danger: 'var(--danger)',
+        success: 'var(--success)',
+        muted: 'var(--text-muted)',
+        border: 'var(--border-color)',
+        background: 'var(--bg-base)',
+        card: 'var(--card-bg)',
+        primaryText: 'var(--text-primary)',
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],

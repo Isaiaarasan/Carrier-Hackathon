@@ -6,18 +6,18 @@ import { applyPrimaryColor } from "../../utils/colorUtils";
 
 export default function QuickThemePickerSidebar() {
   const [showPicker, setShowPicker] = useState(false);
-  const [primaryColor, setPrimaryColor] = useState("#d4af37");
+  const [primaryColor, setPrimaryColor] = useState("#7c3aed");
   const [isSaving, setIsSaving] = useState(false);
 
   const presetColors = [
-    "#d4af37", // Gold
     "#7c3aed", // Purple
-    "#ec4899", // Pink
-    "#06b6d4", // Cyan
-    "#f59e0b", // Amber
-    "#10b981", // Emerald
     "#6366f1", // Indigo
     "#8b5cf6", // Violet
+    "#ec4899", // Pink
+    "#06b6d4", // Cyan
+    "#d4af37", // Gold
+    "#10b981", // Emerald
+    "#f59e0b", // Amber
   ];
 
   const handleColorChange = async (
@@ -76,7 +76,7 @@ export default function QuickThemePickerSidebar() {
 
   return (
     <div className="mb-6 px-4">
-      <button
+      {/* <button
         onClick={() => setShowPicker(!showPicker)}
         className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 hover:border-primary/40 transition-all"
       >
@@ -86,7 +86,7 @@ export default function QuickThemePickerSidebar() {
           className="ml-auto w-6 h-6 rounded-lg border-2 border-primary/30"
           style={{ backgroundColor: primaryColor }}
         />
-      </button>
+      </button> */}
 
       {showPicker && (
         <div className="mt-3 p-4 bg-surface dark:bg-surface rounded-xl border border-border dark:border-gray-700 space-y-3">

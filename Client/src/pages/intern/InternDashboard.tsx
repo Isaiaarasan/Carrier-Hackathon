@@ -72,10 +72,10 @@ export default function InternDashboard() {
     <div className="page-container space-y-6">
       {/* Welcome */}
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
-        <h2 className="text-2xl font-bold text-secondary dark:text-white">
+        <h2 className="text-2xl font-bold text-primaryText">
           Good morning, {user?.name?.split(' ')[0]} 👋
         </h2>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+        <p className="text-muted text-sm mt-1">
           Here's your real-time internship progress
         </p>
       </motion.div>
@@ -98,7 +98,7 @@ export default function InternDashboard() {
                     <Icon size={18} className={color} />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-secondary dark:text-white">{value}</p>
+                <p className="text-3xl font-bold text-primaryText">{value}</p>
               </motion.div>
             ))}
       </div>
@@ -146,11 +146,11 @@ export default function InternDashboard() {
                   className="flex items-center justify-between p-4 rounded-xl border border-border dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-primary-500">
+                    <div className="w-10 h-10 rounded-xl bg-surface-50 flex items-center justify-center text-primary">
                       <Target size={20} />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-secondary dark:text-white group-hover:text-primary-500 transition-colors">{goal.title}</p>
+                      <p className="text-sm font-semibold text-primaryText group-hover:text-primary transition-colors">{goal.title}</p>
                       <p className="text-xs text-muted mt-0.5">Due {formatDate(goal.deadline)}</p>
                     </div>
                   </div>
@@ -168,11 +168,11 @@ export default function InternDashboard() {
           <FileText size={20} />
           <span className="font-semibold text-sm">Submit Weekly Report</span>
         </Link>
-        <Link to="/intern/goals" className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-border dark:border-gray-700 hover:shadow-hover text-secondary dark:text-white rounded-2xl transition-all">
-          <Target size={20} className="text-primary-500" />
+        <Link to="/intern/goals" className="flex items-center gap-3 p-4 bg-surface border border-border hover:shadow-hover text-primaryText rounded-2xl transition-all">
+          <Target size={20} className="text-primary" />
           <span className="font-semibold text-sm">View My Goals</span>
         </Link>
-        <Link to="/intern/leaderboard" className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-border dark:border-gray-700 hover:shadow-hover text-secondary dark:text-white rounded-2xl transition-all">
+        <Link to="/intern/leaderboard" className="flex items-center gap-3 p-4 bg-surface border border-border hover:shadow-hover text-primaryText rounded-2xl transition-all">
           <Trophy size={20} className="text-warning" />
           <span className="font-semibold text-sm">Leaderboard</span>
         </Link>
