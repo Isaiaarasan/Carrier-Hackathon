@@ -8,8 +8,8 @@ import {
   adminCreateUser 
 } from '../controllers/auth.controller.js';
 import { getAnalytics, getLeaderboard, getInterns, getInternProgress } from '../controllers/users.controller.js';
-import { createGoal, getGoals, updateGoalStatus } from '../controllers/goals.controller.js';
-import { submitReport, getMyReports, getReviewQueue, reviewReport, summarizeReport } from '../controllers/reports.controller.js';
+import { createGoal, getGoals, updateGoalStatus, getGoalById, deleteGoal } from '../controllers/goals.controller.js';
+import { submitReport, getMyReports, getReviewQueue, reviewReport, summarizeReport, getReportById } from '../controllers/reports.controller.js';
 import User from '../models/User.model.js';
 import Notification from '../models/Notification.model.js';
 
@@ -27,12 +27,15 @@ router.post('/auth/create-user', protect, authorize('admin'), adminCreateUser);
 // Goal Routes
 router.post('/goals', protect, authorize('manager', 'admin'), createGoal);
 router.get('/goals', protect, getGoals);
+router.get('/goals/:id', protect, getGoalById);
 router.patch('/goals/:id/status', protect, updateGoalStatus);
+router.delete('/goals/:id', protect, deleteGoal);
 
 // Report Routes
 router.post('/reports', protect, authorize('intern'), submitReport);
 router.get('/reports/mine', protect, authorize('intern'), getMyReports);
 router.get('/reports/queue', protect, authorize('manager', 'admin'), getReviewQueue);
+router.get('/reports/:id', protect, getReportById);
 router.patch('/reports/:id/review', protect, authorize('manager', 'admin'), reviewReport);
 router.post('/reports/:id/summarize', protect, authorize('manager', 'admin'), summarizeReport);
 

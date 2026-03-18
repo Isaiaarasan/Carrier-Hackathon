@@ -54,6 +54,35 @@ export const submitReport = async (req, res) => {
 };
 
 /**
+ * GET /api/reports/:id
+ * Get a specific report by ID
+ */
+export const getReportById = async (req, res) => {
+  try {
+    const report = await Report.findById(req.params.id)
+      .populate('intern', 'name email department')
+      .populate('goal', 'title description points deadline');
+    
+    if (!report) {
+      return res.status(404).json({ success: false, message: 'Report not found' });
+    }
+
+    // Verify ownership: user can only view their own report or if they're the manager/admin
+    const isOwner = report.intern._id.toString() === req.user.id;
+    const isManager = req.user.role === 'manager' || req.user.role === 'admin';
+    
+    if (!isOwner && !isManager) {
+      return res.status(403).json({ success: false, message: 'Not authorized to view this report' });
+    }
+
+    res.status(200).json({ success: true, data: report });
+  } catch (error) {
+    console.error('[Get Report Error]:', error.message);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+/**
  * GET /api/reports/mine
  * Intern gets their own report history
  */

@@ -17,15 +17,14 @@ export default function FeedbackView() {
   useEffect(() => {
     if (!id) return
     reportService.getReportById(id)
-      .then(res => setReport(res.data.data || res.data))
-      .catch(() => setReport({
-        _id: id, goal: { title: 'Build REST API with Express' },
-        status: 'Approved', score: 88,
-        content: '<p>This week I completed the REST API endpoints for user authentication including login, register and JWT refresh tokens. I also added middleware for role-based access control.</p>',
-        managerFeedback: 'Excellent work! The API structure is clean and well-documented. The middleware implementation shows a solid understanding of Express.js concepts. Keep up the great work!',
-        aiSummary: 'The intern completed JWT authentication endpoints and RBAC middleware. Work quality is high with clean code structure.',
-        submittedAt: new Date().toISOString(), reviewedAt: new Date().toISOString(),
-      }))
+      .then(res => {
+        const reportData = res.data.data || res.data;
+        setReport(reportData);
+      })
+      .catch(err => {
+        console.error('Failed to load report:', err);
+        setReport(null);
+      })
       .finally(() => setLoading(false))
   }, [id])
 

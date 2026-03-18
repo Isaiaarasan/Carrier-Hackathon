@@ -19,13 +19,14 @@ export default function GoalsList() {
 
   useEffect(() => {
     goalService.getMyGoals()
-      .then(res => setGoals(res.data.data || res.data))
-      .catch(() => setGoals([
-        { _id: '1', title: 'Build REST API with Express', status: 'Approved', deadline: new Date().toISOString(), points: 50 },
-        { _id: '2', title: 'React Component Library', status: 'In-Progress', deadline: new Date().toISOString(), points: 40 },
-        { _id: '3', title: 'Weekly Report - Week 5', status: 'Submitted', deadline: new Date().toISOString(), points: 30 },
-        { _id: '4', title: 'Code Review & Documentation', status: 'Pending', deadline: new Date().toISOString(), points: 25 },
-      ]))
+      .then(res => {
+        const goalsData = res.data.data || res.data;
+        setGoals(Array.isArray(goalsData) ? goalsData : []);
+      })
+      .catch(err => {
+        console.error('Failed to load goals:', err);
+        setGoals([]);
+      })
       .finally(() => setLoading(false))
   }, [])
 

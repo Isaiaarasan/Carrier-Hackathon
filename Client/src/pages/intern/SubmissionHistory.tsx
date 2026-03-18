@@ -30,8 +30,14 @@ export default function SubmissionHistory() {
 
   useEffect(() => {
     reportService.getMyReports()
-      .then(res => setReports(res.data.data || res.data))
-      .catch(() => setReports(mockReports))
+      .then(res => {
+        const reportsData = res.data.data || res.data;
+        setReports(Array.isArray(reportsData) ? reportsData : []);
+      })
+      .catch(err => {
+        console.error('Failed to load reports:', err);
+        setReports([]);
+      })
       .finally(() => setLoading(false))
   }, [])
 

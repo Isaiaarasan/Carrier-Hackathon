@@ -1,22 +1,44 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight, Target, FileText } from 'lucide-react'
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameMonth, isToday, isSameDay, addMonths, subMonths } from 'date-fns'
 import { cn } from '../../utils/cn'
-
-const mockEvents = [
-  { date: new Date(), title: 'Goal Deadline: REST API', type: 'goal' as const },
-  { date: new Date(Date.now() + 3 * 86400000), title: 'Report Due: Week 6', type: 'report' as const },
-  { date: new Date(Date.now() + 7 * 86400000), title: 'Goal Deadline: UI Design', type: 'goal' as const },
-  { date: new Date(Date.now() + 10 * 86400000), title: 'Report Due: Week 7', type: 'report' as const },
-]
+import { goalService } from '../../services/goalService'
 
 export default function CalendarView() {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
+  const [events, setEvents] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchGoals = async () => {
+      try {
+        const res = await goalService.getMyGoals();
+        const goalsData = res.data.data || res.data;
+        const goals = Array.isArray(goalsData) ? goalsData : [];
+        
+        // Convert goals to calendar events
+        const calendarEvents = goals.map(goal => ({
+          date: new Date(goal.deadline),
+          title: `Goal: ${goal.title}`,
+          type: 'goal' as const
+        }));
+        
+        setEvents(calendarEvents);
+      } catch (err) {
+        console.error('Failed to load calendar events:', err);
+        setEvents([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchGoals();
+  }, [])
 
   const days = eachDayOfInterval({ start: startOfMonth(currentDate), end: endOfMonth(currentDate) })
   const startPad = getDay(startOfMonth(currentDate))
-  const selectedEvents = selectedDate ? mockEvents.filter(e => isSameDay(e.date, selectedDate)) : []
+  const selectedEvents = selectedDate ? events.filter(e => isSameDay(e.date, selectedDate)) : []
 
   return (
     <div className="page-container space-y-6">
@@ -47,7 +69,7 @@ export default function CalendarView() {
           <div className="grid grid-cols-7 gap-1">
             {Array(startPad).fill(null).map((_, i) => <div key={`pad-${i}`} />)}
             {days.map(day => {
-              const hasEvent = mockEvents.some(e => isSameDay(e.date, day))
+              const hasEvent = events.some(e => isSameDay(e.date, day))
               const isSelected = selectedDate && isSameDay(day, selectedDate)
               return (
                 <button

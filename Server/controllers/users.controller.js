@@ -23,12 +23,25 @@ export const getAnalytics = async (req, res) => {
       color: s._id === 'Approved' ? '#22C55E' : s._id === 'In-Progress' ? '#2563EB' : s._id === 'Pending' ? '#F59E0B' : '#EF4444'
     }));
 
-    // Weekly stats (mocking the time series grouping logic but using count)
-    const weeklyStats = [
-      { week: 'W1', goals: 5, reports: 4 },
-      { week: 'W2', goals: 8, reports: 7 },
-      { week: 'W3', goals: activeGoals + completedGoals, reports: completedGoals }
-    ];
+    // Real weekly stats from database (last 4 weeks)
+    const weeklyStats = [];
+    for (let i = 3; i >= 0; i--) {
+      const startOfWeek = new Date();
+      startOfWeek.setDate(startOfWeek.getDate() - (startOfWeek.getDay() + 7 * i));
+      startOfWeek.setHours(0, 0, 0, 0);
+      
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(endOfWeek.getDate() + 6);
+      endOfWeek.setHours(23, 59, 59, 999);
+
+      const [weekGoals, weekReports] = await Promise.all([
+        Goal.countDocuments({ createdAt: { $gte: startOfWeek, $lte: endOfWeek } }),
+        Report.countDocuments({ submittedAt: { $gte: startOfWeek, $lte: endOfWeek } })
+      ]);
+
+      const weekLabel = `W${Math.abs(i) + 1}`;
+      weeklyStats.push({ week: weekLabel, goals: weekGoals, reports: weekReports });
+    }
 
     res.status(200).json({
       success: true,
@@ -42,6 +55,7 @@ export const getAnalytics = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('[Analytics Error]:', error.message);
     res.status(400).json({ success: false, message: error.message });
   }
 };
@@ -54,8 +68,13 @@ export const getLeaderboard = async (req, res) => {
     const interns = await User.find({ role: 'intern' }).select('name department avatar');
     
     const leaderboard = await Promise.all(interns.map(async (intern) => {
-      const approvedReports = await Report.countDocuments({ intern: intern._id, status: 'Approved' });
-      const completedGoals = await Goal.countDocuments({ assignedTo: intern._id, status: 'Approved' });
+      const [approvedReports, completedGoals, totalGoals] = await Promise.all([
+        Report.countDocuments({ intern: intern._id, status: 'Approved' }),
+        Goal.countDocuments({ assignedTo: intern._id, status: 'Approved' }),
+        Goal.countDocuments({ assignedTo: intern._id })
+      ]);
+      
+      const successRate = totalGoals > 0 ? Math.round((completedGoals / totalGoals) * 100) : 0;
       
       return {
         _id: intern._id,
@@ -64,17 +83,24 @@ export const getLeaderboard = async (req, res) => {
         avatar: intern.avatar,
         score: approvedReports * 10 + completedGoals * 20,
         goalsCompleted: completedGoals,
-        reportsApproved: approvedReports
+        goalsAssigned: totalGoals,
+        reportsApproved: approvedReports,
+        successRate,
+        rank: 0  // Will be assigned after sorting
       };
     }));
 
-    const sortedLeaderboard = leaderboard.sort((a, b) => b.score - a.score);
+    // Sort by score and assign ranks
+    const sortedLeaderboard = leaderboard
+      .sort((a, b) => b.score - a.score)
+      .map((leader, index) => ({ ...leader, rank: index + 1 }));
 
     res.status(200).json({
       success: true,
       data: sortedLeaderboard
     });
   } catch (error) {
+    console.error('[Leaderboard Error]:', error.message);
     res.status(400).json({ success: false, message: error.message });
   }
 };
@@ -85,12 +111,40 @@ export const getLeaderboard = async (req, res) => {
 export const getInternProgress = async (req, res) => {
   try {
     const userId = req.params.id;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select('name email department avatar');
     if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
-    const goals = await Goal.find({ assignedTo: userId });
-    const approvedGoals = goals.filter(g => g.status === 'Approved').length;
-    const reports = await Report.countDocuments({ intern: userId, status: 'Approved' });
+    const [goals, approvedGoals, reports] = await Promise.all([
+      Goal.find({ assignedTo: userId }),
+      Goal.countDocuments({ assignedTo: userId, status: 'Approved' }),
+      Report.countDocuments({ intern: userId, status: 'Approved' })
+    ]);
+
+    const goalsAssigned = goals.length;
+    const goalsCompleted = approvedGoals;
+    const overallScore = goalsAssigned > 0 ? Math.round((goalsCompleted / goalsAssigned) * 100) : 0;
+
+    // Calculate activity over the last 7 days (simplified heatmap)
+    const activityHeatmap = await Promise.all(
+      Array.from({ length: 7 }).map(async (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (6 - i));
+        date.setHours(0, 0, 0, 0);
+        
+        const nextDate = new Date(date);
+        nextDate.setDate(nextDate.getDate() + 1);
+        
+        const count = await Report.countDocuments({
+          intern: userId,
+          submittedAt: { $gte: date, $lt: nextDate }
+        });
+        
+        return {
+          date: date.toISOString().split('T')[0],
+          count
+        };
+      })
+    );
 
     res.status(200).json({
       success: true,
@@ -99,13 +153,16 @@ export const getInternProgress = async (req, res) => {
         name: user.name,
         email: user.email,
         department: user.department,
-        goalsAssigned: goals.length,
-        goalsCompleted: approvedGoals,
-        overallScore: goals.length > 0 ? Math.round((approvedGoals / goals.length) * 100) : 0,
-        activityHeatmap: [] // This would normally come from a more complex aggregation
+        avatar: user.avatar,
+        goalsAssigned,
+        goalsCompleted,
+        overallScore,
+        reportsApproved: reports,
+        activityHeatmap
       }
     });
   } catch (error) {
+    console.error('[Intern Progress Error]:', error.message);
     res.status(400).json({ success: false, message: error.message });
   }
 };

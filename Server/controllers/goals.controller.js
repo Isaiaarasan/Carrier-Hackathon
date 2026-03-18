@@ -46,3 +46,50 @@ export const updateGoalStatus = async (req, res) => {
     res.status(400).json({ success: false, message: error.message });
   }
 };
+
+export const getGoalById = async (req, res) => {
+  try {
+    const goal = await Goal.findById(req.params.id)
+      .populate('assignedTo', 'name email department')
+      .populate('createdBy', 'name email');
+    
+    if (!goal) {
+      return res.status(404).json({ success: false, message: 'Goal not found' });
+    }
+
+    // Verify authorization: intern can view their assigned goals, managers can view their created goals
+    const isAssigned = goal.assignedTo.some(a => a._id.toString() === req.user.id);
+    const isCreator = goal.createdBy._id.toString() === req.user.id;
+    const isAdmin = req.user.role === 'admin';
+
+    if (!isAssigned && !isCreator && !isAdmin) {
+      return res.status(403).json({ success: false, message: 'Not authorized to view this goal' });
+    }
+
+    res.status(200).json({ success: true, data: goal });
+  } catch (error) {
+    console.error('[Get Goal Error]:', error.message);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const deleteGoal = async (req, res) => {
+  try {
+    const goal = await Goal.findById(req.params.id);
+    
+    if (!goal) {
+      return res.status(404).json({ success: false, message: 'Goal not found' });
+    }
+
+    // Only creator or admin can delete
+    if (goal.createdBy.toString() !== req.user.id && req.user.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Not authorized to delete this goal' });
+    }
+
+    await Goal.findByIdAndDelete(req.params.id);
+    res.status(200).json({ success: true, message: 'Goal deleted successfully' });
+  } catch (error) {
+    console.error('[Delete Goal Error]:', error.message);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};

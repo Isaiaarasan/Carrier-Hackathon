@@ -6,13 +6,6 @@ import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
 import { userService } from '../../services/userService'
 
-const mockInterns = [
-  { _id: '1', name: 'Rahul Kumar', email: 'rahul@example.com', department: 'Engineering', goalsCompleted: 8, isActive: true },
-  { _id: '2', name: 'Priya Sharma', email: 'priya@example.com', department: 'Design', goalsCompleted: 10, isActive: true },
-  { _id: '3', name: 'Arjun Nair', email: 'arjun@example.com', department: 'Marketing', goalsCompleted: 5, isActive: true },
-  { _id: '4', name: 'Meera Patel', email: 'meera@example.com', department: 'Engineering', goalsCompleted: 7, isActive: true },
-]
-
 export default function InternList() {
   const [interns, setInterns] = useState<any[]>([])
   const [search, setSearch] = useState('')
@@ -20,8 +13,14 @@ export default function InternList() {
 
   useEffect(() => {
     userService.getInterns()
-      .then(r => setInterns(r.data.data || r.data))
-      .catch(() => setInterns(mockInterns))
+      .then(r => {
+        const internsData = r.data.data || r.data;
+        setInterns(Array.isArray(internsData) ? internsData : []);
+      })
+      .catch(err => {
+        console.error('Failed to load interns:', err);
+        setInterns([]);
+      })
       .finally(() => setLoading(false))
   }, [])
 
