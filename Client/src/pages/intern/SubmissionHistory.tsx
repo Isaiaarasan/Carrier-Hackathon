@@ -74,7 +74,7 @@ export default function SubmissionHistory() {
   return (
     <div className="page-container space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-secondary dark:text-white">
+        <h2 className="text-2xl font-bold text-primaryText">
           Report History
         </h2>
         <p className="text-sm text-muted mt-1">
@@ -115,7 +115,7 @@ export default function SubmissionHistory() {
                     <Icon size={18} className="text-primary-500" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-semibold text-secondary dark:text-white group-hover:text-primary-500 transition-colors">
+                    <p className="font-semibold text-primaryText group-hover:text-primary-500 transition-colors">
                       {report.goal?.title || "Report"}
                     </p>
                     <p className="text-xs text-muted mt-0.5">
@@ -124,7 +124,7 @@ export default function SubmissionHistory() {
                   </div>
                   <div className="flex items-center gap-3">
                     {report.score != null && (
-                      <span className="text-sm font-bold text-secondary dark:text-white">
+                      <span className="text-sm font-bold text-primaryText">
                         {report.score}/100
                       </span>
                     )}

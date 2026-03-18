@@ -59,7 +59,7 @@ export default function UserManagement() {
     <div className="page-container space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-secondary dark:text-white">User Management</h2>
+          <h2 className="text-2xl font-bold text-primaryText">User Management</h2>
           <p className="text-sm text-muted mt-1">Admin control center for user accounts</p>
         </div>
         <Button onClick={() => setShowAdd(!showAdd)}>
@@ -143,7 +143,7 @@ export default function UserManagement() {
                           {user.name.charAt(0)}
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-secondary dark:text-white">{user.name}</p>
+                          <p className="text-sm font-semibold text-primaryText">{user.name}</p>
                           <p className="text-xs text-muted">{user.email}</p>
                         </div>
                       </div>
@@ -151,7 +151,7 @@ export default function UserManagement() {
                     <td className="px-6 py-4">
                       <Badge variant={roleVariant[user.role] || 'gray'}>{user.role}</Badge>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                    <td className="px-6 py-4 text-sm text-secondary dark:text-gray-400">
                       {user.department || '—'}
                     </td>
                     <td className="px-6 py-4 text-right">

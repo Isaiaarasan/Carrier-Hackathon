@@ -28,10 +28,17 @@ export const useTheme = () => {
           root.style.setProperty("--bg-surface-2", colors.bgSurface2);
           root.style.setProperty("--bg-surface-3", colors.bgSurface3);
 
+          // UI Elements
+          root.style.setProperty("--card-bg", colors.cardBg || colors.bgSurface);
+          root.style.setProperty("--input-bg", colors.inputBg || colors.bgSurface);
+          root.style.setProperty("--input-border", colors.inputBorder || colors.bgSurface3);
+          root.style.setProperty("--border-color", colors.borderColor || "rgba(0,0,0,0.1)");
+
           // Text colors
           root.style.setProperty("--text-primary", colors.textPrimary);
           root.style.setProperty("--text-secondary", colors.textSecondary);
           root.style.setProperty("--text-muted", colors.textMuted);
+          root.style.setProperty("--text-invert", colors.textInvert || "#ffffff");
         }
       } catch (err) {
         console.error("Failed to load theme:", err);

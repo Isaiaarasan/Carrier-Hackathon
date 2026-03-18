@@ -60,7 +60,7 @@ export default function InternProfile() {
                 {intern?.name?.charAt(0)}
               </div>
               <div className="flex-1">
-                <h2 className="text-2xl font-black text-secondary dark:text-white">{intern?.name}</h2>
+                <h2 className="text-2xl font-black text-primaryText">{intern?.name}</h2>
                 <p className="text-sm text-muted">{intern?.email} • <span className="text-primary-500 font-semibold">{intern?.department || 'General'}</span></p>
                 
                 <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -74,7 +74,7 @@ export default function InternProfile() {
                         <Icon size={14} className={color} />
                         <span className="text-[10px] text-muted font-bold uppercase tracking-wider">{label}</span>
                       </div>
-                      <p className="text-2xl font-black text-secondary dark:text-white">{value}</p>
+                      <p className="text-2xl font-black text-primaryText">{value}</p>
                     </div>
                   ))}
                 </div>
@@ -114,7 +114,7 @@ export default function InternProfile() {
                           <Target size={20} />
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-secondary dark:text-white">{goal.title}</p>
+                          <p className="text-sm font-bold text-primaryText">{goal.title}</p>
                           <p className="text-[10px] text-muted mt-0.5 uppercase">{goal.points} points • Due {formatDate(goal.deadline)}</p>
                         </div>
                       </div>
@@ -131,13 +131,13 @@ export default function InternProfile() {
             <CardBody className="space-y-4">
               <div>
                 <p className="text-[10px] font-bold text-muted uppercase mb-1">Professional Bio</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed italic">
+                <p className="text-sm text-secondary dark:text-gray-400 leading-relaxed italic">
                   {intern.bio || 'No bio provided.'}
                 </p>
               </div>
               <div className="pt-4 border-t border-border dark:border-gray-800">
                 <p className="text-[10px] font-bold text-muted uppercase mb-1">Contact Email</p>
-                <p className="text-sm font-medium text-secondary dark:text-white">{intern.email}</p>
+                <p className="text-sm font-medium text-primaryText">{intern.email}</p>
               </div>
             </CardBody>
           </Card>

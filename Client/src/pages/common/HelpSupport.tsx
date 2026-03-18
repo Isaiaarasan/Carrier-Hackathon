@@ -152,7 +152,7 @@ export default function HelpSupport() {
   return (
     <div className="page-container space-y-6 max-w-4xl">
       <div>
-        <h2 className="text-2xl font-bold text-secondary dark:text-white">
+        <h2 className="text-2xl font-bold text-primaryText">
           Help & Support
         </h2>
         <p className="text-sm text-muted mt-1">
@@ -177,7 +177,7 @@ export default function HelpSupport() {
                 onClick={() => setFaqOpen(faqOpen === i ? null : i)}
                 className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
               >
-                <span className="text-sm font-medium text-secondary dark:text-white">
+                <span className="text-sm font-medium text-primaryText">
                   {q}
                 </span>
                 {faqOpen === i ? (
@@ -194,7 +194,7 @@ export default function HelpSupport() {
                     exit={{ height: 0 }}
                     className="overflow-hidden"
                   >
-                    <p className="px-4 pb-4 text-sm text-gray-600 dark:text-gray-400 leading-relaxed border-t border-border dark:border-gray-700 pt-3">
+                    <p className="px-4 pb-4 text-sm text-secondary dark:text-gray-400 leading-relaxed border-t border-border dark:border-gray-700 pt-3">
                       {a}
                     </p>
                   </motion.div>
@@ -301,7 +301,7 @@ export default function HelpSupport() {
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2 flex-wrap">
-                        <h4 className="text-sm font-semibold text-secondary dark:text-white">
+                        <h4 className="text-sm font-semibold text-primaryText">
                           {ticket.subject}
                         </h4>
                         <Badge variant="secondary" className="text-[10px]">
@@ -409,7 +409,7 @@ export default function HelpSupport() {
                                         </span>{" "}
                                         • {formatDate(new Date(resp.createdAt))}
                                       </p>
-                                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                                      <p className="text-sm text-secondary dark:text-gray-400">
                                         {resp.message}
                                       </p>
                                     </div>

@@ -39,8 +39,8 @@ export default function ForgotPasswordPage() {
                 <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-4">
                   <Mail size={22} className="text-primary-500" />
                 </div>
-                <h1 className="text-2xl font-bold text-secondary dark:text-white">Forgot password?</h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Enter your email and we'll send you a reset link.</p>
+                <h1 className="text-2xl font-bold text-primaryText">Forgot password?</h1>
+                <p className="text-sm text-muted mt-1">Enter your email and we'll send you a reset link.</p>
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <Input label="Email address" type="email" placeholder="you@company.com" prefixIcon={<Mail size={15} />} value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -52,8 +52,8 @@ export default function ForgotPasswordPage() {
               <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle size={32} className="text-success" />
               </div>
-              <h2 className="text-xl font-bold text-secondary dark:text-white mb-2">Check your inbox!</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">We've sent a reset link to <strong>{email}</strong></p>
+              <h2 className="text-xl font-bold text-primaryText mb-2">Check your inbox!</h2>
+              <p className="text-sm text-muted mb-6">We've sent a reset link to <strong>{email}</strong></p>
               <Link to="/login" className="text-primary-500 hover:text-primary-600 font-semibold text-sm">Back to Login</Link>
             </div>
           )}

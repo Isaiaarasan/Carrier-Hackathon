@@ -76,58 +76,68 @@ export default function QuickThemePickerSidebar() {
 
   return (
     <div className="mb-6 px-4">
-      {/* <button
+      <button
         onClick={() => setShowPicker(!showPicker)}
-        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 hover:border-primary/40 transition-all"
+        className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl bg-surface-50 hover:bg-surface-100 border border-border transition-all group"
       >
-        <Palette size={18} className="text-primary" />
-        <span className="text-sm font-semibold text-primary">Theme Color</span>
+        <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+          <Palette size={16} />
+        </div>
+        <span className="text-sm font-bold text-primaryText">Theme Color</span>
         <div
-          className="ml-auto w-6 h-6 rounded-lg border-2 border-primary/30"
+          className="ml-auto w-5 h-5 rounded-lg border-2 border-border shadow-sm group-hover:rotate-12 transition-transform"
           style={{ backgroundColor: primaryColor }}
         />
-      </button> */}
+      </button>
 
       {showPicker && (
-        <div className="mt-3 p-4 bg-surface dark:bg-surface rounded-xl border border-border dark:border-gray-700 space-y-3">
+        <div className="mt-3 p-4 bg-surface rounded-3xl border border-border shadow-card space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
           {/* Preset Colors */}
-          <div className="space-y-2">
-            <p className="text-xs font-semibold text-muted uppercase">
-              Presets
+          <div className="space-y-2.5">
+            <p className="text-[10px] font-black text-muted uppercase tracking-widest pl-1">
+              Premium Palettes
             </p>
             <div className="grid grid-cols-4 gap-2">
               {presetColors.map((color) => (
                 <button
                   key={color}
                   onClick={() => handleColorChange(color)}
-                  className={`w-10 h-10 rounded-lg border-2 transition-all ${
+                  className={`w-10 h-10 rounded-xl border-2 transition-all relative overflow-hidden ${
                     primaryColor === color
-                      ? "border-primary ring-2 ring-primary/30"
-                      : "border-transparent hover:border-primary/30"
+                      ? "border-primary ring-4 ring-primary/10"
+                      : "border-transparent hover:scale-105"
                   }`}
                   style={{ backgroundColor: color }}
                   title={color}
-                />
+                >
+                  {primaryColor === color && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+                      <div className="w-1.5 h-1.5 rounded-full bg-white shadow-sm" />
+                    </div>
+                  )}
+                </button>
               ))}
             </div>
           </div>
 
           {/* Custom Color Picker */}
-          <div className="space-y-2">
-            <p className="text-xs font-semibold text-muted uppercase">Custom</p>
+          <div className="space-y-2.5">
+            <p className="text-[10px] font-black text-muted uppercase tracking-widest pl-1">Custom Brand</p>
             <div className="flex gap-2">
-              <input
-                type="color"
-                value={primaryColor}
-                onChange={(e) => setPrimaryColor(e.target.value)}
-                className="w-12 h-10 rounded-lg cursor-pointer border-2 border-border dark:border-gray-700"
-              />
+              <div className="relative w-12 h-10 rounded-xl overflow-hidden border border-border">
+                <input
+                  type="color"
+                  value={primaryColor}
+                  onChange={(e) => setPrimaryColor(e.target.value)}
+                  className="absolute -inset-2 w-16 h-16 cursor-pointer bg-transparent border-none"
+                />
+              </div>
               <input
                 type="text"
                 value={primaryColor}
                 onChange={(e) => setPrimaryColor(e.target.value)}
                 placeholder="#000000"
-                className="flex-1 px-2 py-1 text-sm bg-bg-surface dark:bg-bg-surface border border-border dark:border-gray-700 rounded-lg font-mono"
+                className="flex-1 px-3 py-1 text-xs bg-surface-50 border border-border rounded-xl font-mono text-primaryText focus:ring-2 focus:ring-primary/20 outline-none transition-all"
               />
             </div>
           </div>
@@ -136,9 +146,9 @@ export default function QuickThemePickerSidebar() {
           <button
             onClick={handleCustomColorApply}
             disabled={isSaving}
-            className="w-full py-2 px-3 text-sm font-semibold rounded-lg bg-primary text-primary-text hover:bg-primary-hover transition-colors disabled:opacity-50"
+            className="w-full py-2.5 px-3 text-xs font-bold rounded-xl bg-primary text-white hover:opacity-90 shadow-glow transition-all disabled:opacity-50 active:scale-95"
           >
-            {isSaving ? "Applying..." : "Apply Color"}
+            {isSaving ? "Syncing..." : "Apply Signature Shade"}
           </button>
         </div>
       )}

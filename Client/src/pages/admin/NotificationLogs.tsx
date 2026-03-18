@@ -40,7 +40,7 @@ export default function NotificationLogs() {
   return (
     <div className="page-container space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-secondary dark:text-white">
+        <h2 className="text-2xl font-bold text-primaryText">
           Notification Logs
         </h2>
         <p className="text-sm text-muted mt-1">

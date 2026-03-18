@@ -13,15 +13,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="space-y-2">
         {label && (
-          <label className="block text-xs font-semibold uppercase tracking-wider"
-            style={{ color: 'rgba(167,139,250,0.7)' }}>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-primaryText opacity-80">
             {label}
           </label>
         )}
         <div className="relative">
           {prefixIcon && (
-            <span className="absolute left-4 top-1/2 -translate-y-1/2"
-              style={{ color: 'rgba(124,58,237,0.6)' }}>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-60">
               {prefixIcon}
             </span>
           )}
@@ -36,7 +34,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
         </div>
-        {hint && !error && <p className="text-xs" style={{ color: 'rgba(248,248,255,0.3)' }}>{hint}</p>}
+        {hint && !error && <p className="text-xs text-muted opacity-60">{hint}</p>}
         {error && (
           <p className="text-xs flex items-center gap-1" style={{ color: '#EF233C' }}>
             <span>⚠</span> {error}

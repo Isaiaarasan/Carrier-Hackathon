@@ -22,8 +22,8 @@ export default function RoleSelectionPage() {
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-blue-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 flex items-center justify-center px-4">
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-xl text-center">
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-secondary dark:text-white mb-2">Welcome, {user?.name}! 👋</h1>
-          <p className="text-gray-500 dark:text-gray-400">Choose your role to get started with InternPulse</p>
+          <h1 className="text-3xl font-bold text-primaryText mb-2">Welcome, {user?.name}! 👋</h1>
+          <p className="text-muted">Choose your role to get started with InternPulse</p>
         </div>
         <div className="space-y-4">
           {roles.map(({ value, icon: Icon, label, desc, color, dash }, i) => (
@@ -39,8 +39,8 @@ export default function RoleSelectionPage() {
                 <Icon size={24} className="text-white" />
               </div>
               <div>
-                <p className="font-semibold text-secondary dark:text-white text-base">{label}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{desc}</p>
+                <p className="font-semibold text-primaryText text-base">{label}</p>
+                <p className="text-sm text-muted">{desc}</p>
               </div>
             </motion.button>
           ))}

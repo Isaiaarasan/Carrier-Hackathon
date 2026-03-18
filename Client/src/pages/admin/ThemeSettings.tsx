@@ -21,25 +21,35 @@ interface ThemeColors {
   bgSurface: string;
   bgSurface2: string;
   bgSurface3: string;
+  cardBg: string;
+  inputBg: string;
+  inputBorder: string;
+  borderColor: string;
   textPrimary: string;
   textSecondary: string;
   textMuted: string;
+  textInvert: string;
 }
 
 const colorFields = [
-  { key: "primary", label: "Primary Color", category: "Main" },
-  { key: "primaryHover", label: "Primary Hover", category: "Main" },
+  { key: "primary", label: "Primary Color", category: "Brand" },
+  { key: "primaryHover", label: "Primary Hover", category: "Brand" },
   { key: "accent", label: "Accent Color", category: "Status" },
   { key: "danger", label: "Danger Color", category: "Status" },
   { key: "warning", label: "Warning Color", category: "Status" },
   { key: "success", label: "Success Color", category: "Status" },
-  { key: "bgBase", label: "Background Base", category: "Light Theme" },
-  { key: "bgSurface", label: "Background Surface", category: "Light Theme" },
-  { key: "bgSurface2", label: "Background Surface 2", category: "Light Theme" },
-  { key: "bgSurface3", label: "Background Surface 3", category: "Light Theme" },
-  { key: "textPrimary", label: "Text Primary", category: "Light Theme" },
-  { key: "textSecondary", label: "Text Secondary", category: "Light Theme" },
-  { key: "textMuted", label: "Text Muted", category: "Light Theme" },
+  { key: "bgBase", label: "Page Background", category: "Surfaces" },
+  { key: "bgSurface", label: "Surface Layer 1", category: "Surfaces" },
+  { key: "bgSurface2", label: "Surface Layer 2", category: "Surfaces" },
+  { key: "bgSurface3", label: "Surface Layer 3", category: "Surfaces" },
+  { key: "cardBg", label: "Card Backdrop", category: "Elements" },
+  { key: "inputBg", label: "Input Backdrop", category: "Elements" },
+  { key: "inputBorder", label: "Input Border", category: "Elements" },
+  { key: "borderColor", label: "Global Border", category: "Elements" },
+  { key: "textPrimary", label: "Headline Text", category: "Typography" },
+  { key: "textSecondary", label: "Body Text", category: "Typography" },
+  { key: "textMuted", label: "Secondary Text", category: "Typography" },
+  { key: "textInvert", label: "Contrast Text", category: "Typography" },
 ];
 
 const themePresets = {
@@ -50,16 +60,21 @@ const themePresets = {
       primary: "#E50914",
       primaryHover: "#B81D13",
       accent: "#E50914",
-      danger: "#E50914",
-      warning: "#FFB703",
-      success: "#06D6A0",
-      bgBase: "#0F0F0F",
-      bgSurface: "#1A1A1A",
-      bgSurface2: "#2A2A2A",
-      bgSurface3: "#3A3A3A",
+      danger: "#B81D13",
+      warning: "#F5C518",
+      success: "#46D369",
+      bgBase: "#141414",
+      bgSurface: "#181818",
+      bgSurface2: "#232323",
+      bgSurface3: "#2F2F2F",
+      cardBg: "#181818",
+      inputBg: "#333333",
+      inputBorder: "#444444",
+      borderColor: "rgba(255,255,255,0.1)",
       textPrimary: "#FFFFFF",
-      textSecondary: "#E0E0E0",
-      textMuted: "#A0A0A0",
+      textSecondary: "#E5E5E5",
+      textMuted: "#B3B3B3",
+      textInvert: "#000000",
     },
   },
   amazonPrime: {
@@ -68,36 +83,46 @@ const themePresets = {
     colors: {
       primary: "#00A8E1",
       primaryHover: "#0084A8",
-      accent: "#00A8E1",
+      accent: "#FF9900",
       danger: "#EF233C",
       warning: "#FFB703",
       success: "#06D6A0",
-      bgBase: "#F5F5F1",
-      bgSurface: "#FFFFFF",
-      bgSurface2: "#F0F0F0",
-      bgSurface3: "#E8E8E8",
-      textPrimary: "#0D0D0D",
-      textSecondary: "#565656",
-      textMuted: "#B0B0B0",
+      bgBase: "#1A242F",
+      bgSurface: "#232F3E",
+      bgSurface2: "#37475A",
+      bgSurface3: "#485769",
+      cardBg: "#232F3E",
+      inputBg: "#131A22",
+      inputBorder: "#3a4553",
+      borderColor: "rgba(255,255,255,0.12)",
+      textPrimary: "#FFFFFF",
+      textSecondary: "#CCCCCC",
+      textMuted: "#888888",
+      textInvert: "#1A242F",
     },
   },
   flipkart: {
     name: "Flipkart",
     icon: "🛍️",
     colors: {
-      primary: "#FFC52B",
-      primaryHover: "#FFB813",
+      primary: "#2874F0",
+      primaryHover: "#1B5ABF",
       accent: "#FFC52B",
-      danger: "#EF233C",
-      warning: "#FFB703",
-      success: "#06D6A0",
-      bgBase: "#F5F5F5",
+      danger: "#FF6161",
+      warning: "#FFC52B",
+      success: "#26A541",
+      bgBase: "#F1F3F6",
       bgSurface: "#FFFFFF",
-      bgSurface2: "#F0F0F0",
-      bgSurface3: "#E8E8E8",
-      textPrimary: "#0D0D0D",
-      textSecondary: "#565656",
-      textMuted: "#B0B0B0",
+      bgSurface2: "#F8F9FA",
+      bgSurface3: "#E0E0E0",
+      cardBg: "#FFFFFF",
+      inputBg: "#FFFFFF",
+      inputBorder: "#dbdbdb",
+      borderColor: "rgba(0,0,0,0.08)",
+      textPrimary: "#212121",
+      textSecondary: "#878787",
+      textMuted: "#AEAEAE",
+      textInvert: "#FFFFFF",
     },
   },
   amazon: {
@@ -106,36 +131,46 @@ const themePresets = {
     colors: {
       primary: "#FF9900",
       primaryHover: "#E68A00",
-      accent: "#FF9900",
-      danger: "#EF233C",
-      warning: "#FFB703",
-      success: "#06D6A0",
-      bgBase: "#F5F5F5",
+      accent: "#131921",
+      danger: "#B12704",
+      warning: "#FFA41C",
+      success: "#067D62",
+      bgBase: "#F3F3F3",
       bgSurface: "#FFFFFF",
-      bgSurface2: "#F0F0F0",
-      bgSurface3: "#E8E8E8",
-      textPrimary: "#0D0D0D",
-      textSecondary: "#565656",
-      textMuted: "#B0B0B0",
+      bgSurface2: "#FAFAFA",
+      bgSurface3: "#EEEEEE",
+      cardBg: "#FFFFFF",
+      inputBg: "#FFFFFF",
+      inputBorder: "#a6a6a6",
+      borderColor: "rgba(0,0,0,0.1)",
+      textPrimary: "#0F1111",
+      textSecondary: "#565959",
+      textMuted: "#767676",
+      textInvert: "#FFFFFF",
     },
   },
   default: {
-    name: "InternPulse Default",
+    name: "InternPulse Pro",
     icon: "✨",
     colors: {
-      primary: "#D4AF37",
-      primaryHover: "#B8860B",
-      accent: "#06D6A0",
-      danger: "#EF233C",
-      warning: "#FFB703",
-      success: "#06D6A0",
-      bgBase: "#FFFBF0",
+      primary: "#7C3AED",
+      primaryHover: "#6D28D9",
+      accent: "#10B981",
+      danger: "#EF4444",
+      warning: "#F59E0B",
+      success: "#10B981",
+      bgBase: "#F8FAFC",
       bgSurface: "#FFFFFF",
-      bgSurface2: "#FFF9E6",
-      bgSurface3: "#FFF2D0",
-      textPrimary: "#1F1100",
-      textSecondary: "#5C4B2E",
-      textMuted: "#A89968",
+      bgSurface2: "#F1F5F9",
+      bgSurface3: "#E2E8F0",
+      cardBg: "#FFFFFF",
+      inputBg: "#FFFFFF",
+      inputBorder: "#E2E8F0",
+      borderColor: "rgba(0,0,0,0.08)",
+      textPrimary: "#0F172A",
+      textSecondary: "#334155",
+      textMuted: "#64748B",
+      textInvert: "#FFFFFF",
     },
   },
 };
@@ -176,30 +211,41 @@ export default function ThemeSettings() {
     }
   };
 
+  const setCSSVariables = (c: ThemeColors) => {
+    const root = document.documentElement;
+    const mapping: Record<string, string> = {
+      "--primary": c.primary,
+      "--primary-hover": c.primaryHover,
+      "--accent": c.accent,
+      "--danger": c.danger,
+      "--warning": c.warning,
+      "--success": c.success,
+      "--bg-base": c.bgBase,
+      "--bg-surface": c.bgSurface,
+      "--bg-surface-2": c.bgSurface2,
+      "--bg-surface-3": c.bgSurface3,
+      "--card-bg": c.cardBg,
+      "--input-bg": c.inputBg,
+      "--input-border": c.inputBorder,
+      "--border-color": c.borderColor,
+      "--text-primary": c.textPrimary,
+      "--text-secondary": c.textSecondary,
+      "--text-muted": c.textMuted,
+      "--text-invert": c.textInvert,
+    };
+    Object.entries(mapping).forEach(([key, value]) => {
+      root.style.setProperty(key, value);
+    });
+  };
+
   const handleSave = async () => {
     if (!colors) return;
 
     setSaving(true);
     try {
       await themeService.updateTheme(colors);
-
-      // Apply colors to CSS variables immediately
-      const root = document.documentElement;
-      root.style.setProperty("--primary", colors.primary);
-      root.style.setProperty("--primary-hover", colors.primaryHover);
-      root.style.setProperty("--accent", colors.accent);
-      root.style.setProperty("--danger", colors.danger);
-      root.style.setProperty("--warning", colors.warning);
-      root.style.setProperty("--success", colors.success);
-      root.style.setProperty("--bg-base", colors.bgBase);
-      root.style.setProperty("--bg-surface", colors.bgSurface);
-      root.style.setProperty("--bg-surface-2", colors.bgSurface2);
-      root.style.setProperty("--bg-surface-3", colors.bgSurface3);
-      root.style.setProperty("--text-primary", colors.textPrimary);
-      root.style.setProperty("--text-secondary", colors.textSecondary);
-      root.style.setProperty("--text-muted", colors.textMuted);
-
-      toast.success("Theme colors updated successfully!");
+      setCSSVariables(colors);
+      toast.success("Theme settings synchronized globally!");
     } catch (err: any) {
       console.error("Failed to save theme:", err);
       toast.error(err.response?.data?.message || "Failed to save theme");
@@ -213,32 +259,17 @@ export default function ThemeSettings() {
 
     try {
       const res = await themeService.resetTheme();
-      setColors(res.data.data);
-
-      // Apply default colors
-      const root = document.documentElement;
-      root.style.setProperty("--primary", res.data.data.primary);
-      root.style.setProperty("--primary-hover", res.data.data.primaryHover);
-      root.style.setProperty("--accent", res.data.data.accent);
-      root.style.setProperty("--danger", res.data.data.danger);
-      root.style.setProperty("--warning", res.data.data.warning);
-      root.style.setProperty("--success", res.data.data.success);
-      root.style.setProperty("--bg-base", res.data.data.bgBase);
-      root.style.setProperty("--bg-surface", res.data.data.bgSurface);
-      root.style.setProperty("--bg-surface-2", res.data.data.bgSurface2);
-      root.style.setProperty("--bg-surface-3", res.data.data.bgSurface3);
-      root.style.setProperty("--text-primary", res.data.data.textPrimary);
-      root.style.setProperty("--text-secondary", res.data.data.textSecondary);
-      root.style.setProperty("--text-muted", res.data.data.textMuted);
-
-      toast.success("Theme reset to defaults!");
+      const newColors = res.data.data;
+      setColors(newColors);
+      setCSSVariables(newColors);
+      toast.success("Theme restored to factory defaults!");
     } catch (err: any) {
       console.error("Failed to reset theme:", err);
       toast.error(err.response?.data?.message || "Failed to reset theme");
     }
   };
 
-  const categories = ["Main", "Status", "Light Theme"];
+  const categories = ["Brand", "Status", "Surfaces", "Elements", "Typography"];
   const getFieldsByCategory = (category: string) => {
     return colorFields.filter((f) => f.category === category);
   };
@@ -255,7 +286,7 @@ export default function ThemeSettings() {
         <CardBody>
           {!loading && colors && (
             <div className="mb-8 pb-8 border-b border-border dark:border-gray-700">
-              <h3 className="text-sm font-semibold text-secondary dark:text-white mb-4">
+              <h3 className="text-sm font-semibold text-primaryText mb-4">
                 Quick Presets
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
@@ -272,7 +303,7 @@ export default function ThemeSettings() {
                       className="w-full h-6 rounded-lg"
                       style={{ backgroundColor: preset.colors.primary }}
                     />
-                    <p className="text-xs font-medium text-secondary dark:text-white text-center">
+                    <p className="text-xs font-medium text-primaryText text-center">
                       {preset.name}
                     </p>
                   </button>
@@ -293,7 +324,7 @@ export default function ThemeSettings() {
             <div className="space-y-6">
               {categories.map((category) => (
                 <div key={category}>
-                  <h3 className="text-sm font-semibold text-secondary dark:text-white mb-3">
+                  <h3 className="text-sm font-semibold text-primaryText mb-3">
                     {category}
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -335,7 +366,7 @@ export default function ThemeSettings() {
 
               {/* Preview Section */}
               <div className="border-t border-border dark:border-gray-700 pt-6">
-                <h3 className="text-sm font-semibold text-secondary dark:text-white mb-3">
+                <h3 className="text-sm font-semibold text-primaryText mb-3">
                   Preview
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

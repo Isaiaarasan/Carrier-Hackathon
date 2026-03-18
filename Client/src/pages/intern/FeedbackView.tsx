@@ -85,7 +85,7 @@ export default function FeedbackView() {
           </div>
           {report.score != null && (
             <div className="ml-auto text-right">
-              <p className="text-2xl font-bold text-secondary dark:text-white">
+              <p className="text-2xl font-bold text-primaryText">
                 {report.score}
                 <span className="text-sm text-muted">/100</span>
               </p>
@@ -119,7 +119,7 @@ export default function FeedbackView() {
               </span>
             </CardHeader>
             <CardBody>
-              <p className="text-sm text-gray-600 dark:text-gray-400 italic leading-relaxed">
+              <p className="text-sm text-secondary dark:text-gray-400 italic leading-relaxed">
                 "{report.aiSummary}"
               </p>
             </CardBody>
@@ -138,7 +138,7 @@ export default function FeedbackView() {
                   M
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p className="text-sm text-secondary dark:text-gray-400 leading-relaxed">
                     {report.managerFeedback}
                   </p>
                   <p className="text-xs text-muted mt-2">
@@ -157,7 +157,7 @@ export default function FeedbackView() {
           </CardHeader>
           <CardBody>
             <div
-              className="prose prose-sm dark:prose-invert max-w-none text-sm text-gray-600 dark:text-gray-400"
+              className="prose prose-sm dark:prose-invert max-w-none text-sm text-secondary dark:text-gray-400"
               dangerouslySetInnerHTML={{ __html: report.content }}
             />
           </CardBody>

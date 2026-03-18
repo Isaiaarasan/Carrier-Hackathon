@@ -30,7 +30,7 @@ export default function Leaderboard() {
     <div className="page-container space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-secondary dark:text-white">Leaderboard 🏆</h2>
+          <h2 className="text-2xl font-bold text-primaryText">Leaderboard 🏆</h2>
           <p className="text-sm text-muted mt-1">Rankings based on goals completed + reports approved</p>
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function Leaderboard() {
                     </div>
                     <p className={`font-bold text-sm truncate ${podiumColors[actualRank]}`}>{leader.name}</p>
                     <p className="text-[10px] text-muted truncate">{leader.department || 'General'}</p>
-                    <p className="text-xl font-black text-secondary dark:text-white mt-2">{leader.score}</p>
+                    <p className="text-xl font-black text-primaryText mt-2">{leader.score}</p>
                     <p className="text-[10px] text-muted uppercase tracking-wider">points</p>
                   </motion.div>
                 )
@@ -96,13 +96,13 @@ export default function Leaderboard() {
                           {leader.name.charAt(0)}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-secondary dark:text-white truncate">
+                          <p className="text-sm font-semibold text-primaryText truncate">
                             {leader.name} {isMe && <span className="text-[10px] bg-primary-500 text-white px-1.5 py-0.5 rounded ml-1 uppercase">Me</span>}
                           </p>
                           <p className="text-xs text-muted truncate">{leader.department || 'General'} • {leader.goalsCompleted} goals • {leader.reportsApproved} reports</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-secondary dark:text-white">{leader.score}</p>
+                          <p className="font-bold text-primaryText">{leader.score}</p>
                           <p className="text-[10px] text-muted uppercase">pts</p>
                         </div>
                       </motion.div>

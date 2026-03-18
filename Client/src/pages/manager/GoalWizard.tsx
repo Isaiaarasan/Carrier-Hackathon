@@ -60,7 +60,7 @@ export default function GoalWizard() {
   return (
     <div className="page-container max-w-2xl">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-secondary dark:text-white">Create Weekly Goal</h2>
+        <h2 className="text-2xl font-bold text-primaryText">Create Weekly Goal</h2>
         <p className="text-sm text-muted mt-1">A 3-step process to set clear, measurable goals for your interns</p>
       </div>
 
@@ -117,7 +117,7 @@ export default function GoalWizard() {
                       <input type="checkbox" checked={form.assignedTo.includes(intern._id)} onChange={() => toggleIntern(intern._id)} className="w-4 h-4 accent-primary-500" />
                       <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-bold">{intern.name.charAt(0)}</div>
                       <div>
-                        <p className="text-sm font-semibold text-secondary dark:text-white">{intern.name}</p>
+                        <p className="text-sm font-semibold text-primaryText">{intern.name}</p>
                         <p className="text-xs text-muted">{intern.department}</p>
                       </div>
                     </label>
@@ -135,9 +135,9 @@ export default function GoalWizard() {
                 </div>
                 <div className="p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl space-y-2">
                   <p className="text-sm font-semibold text-primary-700 dark:text-primary-300">Review Summary</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Title:</strong> {form.title}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Interns:</strong> {form.assignedTo.length} selected</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Points:</strong> {form.points}</p>
+                  <p className="text-sm text-secondary dark:text-gray-400"><strong>Title:</strong> {form.title}</p>
+                  <p className="text-sm text-secondary dark:text-gray-400"><strong>Interns:</strong> {form.assignedTo.length} selected</p>
+                  <p className="text-sm text-secondary dark:text-gray-400"><strong>Points:</strong> {form.points}</p>
                 </div>
               </div>
             )}

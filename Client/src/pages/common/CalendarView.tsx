@@ -58,7 +58,7 @@ export default function CalendarView() {
 
   return (
     <div className="page-container space-y-6">
-      <h2 className="text-2xl font-bold text-secondary dark:text-white">
+      <h2 className="text-2xl font-bold text-primaryText">
         Calendar
       </h2>
 
@@ -73,7 +73,7 @@ export default function CalendarView() {
             >
               <ChevronLeft size={16} className="text-muted" />
             </button>
-            <h3 className="text-base font-bold text-secondary dark:text-white">
+            <h3 className="text-base font-bold text-primaryText">
               {format(currentDate, "MMMM yyyy")}
             </h3>
             <button
@@ -138,7 +138,7 @@ export default function CalendarView() {
 
         {/* Events for selected day */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl border border-border dark:border-gray-700 p-6">
-          <h3 className="text-sm font-bold text-secondary dark:text-white mb-1">
+          <h3 className="text-sm font-bold text-primaryText mb-1">
             {selectedDate
               ? format(selectedDate, "MMMM d, yyyy")
               : "Select a date"}
@@ -176,7 +176,7 @@ export default function CalendarView() {
                     />
                   )}
                   <div>
-                    <p className="text-xs font-semibold text-secondary dark:text-white">
+                    <p className="text-xs font-semibold text-primaryText">
                       {ev.title}
                     </p>
                     <p className="text-xs text-muted mt-0.5 capitalize">

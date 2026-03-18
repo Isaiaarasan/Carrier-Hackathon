@@ -54,7 +54,7 @@ export default function ManagerDashboard() {
     <div className="page-container space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-secondary dark:text-white">Manager Overview</h2>
+          <h2 className="text-2xl font-bold text-primaryText">Manager Overview</h2>
           <p className="text-sm text-muted mt-1">Real-time team performance tracking</p>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function ManagerDashboard() {
                       <Icon size={18} className={color} />
                     </div>
                   </div>
-                  <p className="text-3xl font-bold text-secondary dark:text-white group-hover:text-primary-500 transition-colors">{value}</p>
+                  <p className="text-3xl font-bold text-primaryText group-hover:text-primary-500 transition-colors">{value}</p>
                 </Link>
               </motion.div>
             ))}
@@ -120,7 +120,7 @@ export default function ManagerDashboard() {
                       {intern.name?.charAt(0)}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-secondary dark:text-white">{intern.name}</p>
+                      <p className="text-sm font-semibold text-primaryText">{intern.name}</p>
                       <p className="text-xs text-muted">{intern.department || 'General'}</p>
                     </div>
                     <div className="ml-auto">
@@ -139,10 +139,10 @@ export default function ManagerDashboard() {
         <Link to="/manager/goals/create" className="flex items-center gap-3 p-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl transition-all hover:shadow-glow shadow-primary-500/20">
           <Target size={20} /> <span className="font-semibold text-sm">Create New Goal</span>
         </Link>
-        <Link to="/manager/reviews" className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-border dark:border-gray-700 hover:shadow-hover text-secondary dark:text-white rounded-2xl transition-all">
+        <Link to="/manager/reviews" className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-border dark:border-gray-700 hover:shadow-hover text-primaryText rounded-2xl transition-all">
           <FileText size={20} className="text-warning" /> <span className="font-semibold text-sm">Review Queue ({stats.pendingReviews})</span>
         </Link>
-        <Link to="/manager/analytics" className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-border dark:border-gray-700 hover:shadow-hover text-secondary dark:text-white rounded-2xl transition-all">
+        <Link to="/manager/analytics" className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-border dark:border-gray-700 hover:shadow-hover text-primaryText rounded-2xl transition-all">
           <Users size={20} className="text-primary-500" /> <span className="font-semibold text-sm">Team Analytics</span>
         </Link>
       </div>

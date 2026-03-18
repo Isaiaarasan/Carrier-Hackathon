@@ -11,8 +11,8 @@ const variantMap: Record<string, string> = {
   warning: 'bg-warning/10 text-warning',
   danger: 'bg-danger/10 text-danger',
   primary: 'bg-primary-500/10 text-primary-600 dark:text-primary-400',
-  gray: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300',
-  default: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300',
+  gray: 'bg-gray-100 dark:bg-gray-700 text-secondary dark:text-gray-300',
+  default: 'bg-gray-100 dark:bg-gray-700 text-secondary dark:text-gray-300',
 }
 
 export function Badge({ variant = 'default', children, className }: BadgeProps) {

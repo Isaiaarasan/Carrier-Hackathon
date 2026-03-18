@@ -53,7 +53,7 @@ export default function GoalsList() {
     <div className="page-container space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-secondary dark:text-white">
+          <h2 className="text-2xl font-bold text-primaryText">
             My Goals
           </h2>
           <p className="text-sm text-muted mt-1">{goals.length} goals total</p>
@@ -126,7 +126,7 @@ export default function GoalsList() {
                     <Target size={18} className="text-primary-500" />
                   </div>
                   <div>
-                    <p className="font-semibold text-secondary dark:text-white group-hover:text-primary-500 transition-colors">
+                    <p className="font-semibold text-primaryText group-hover:text-primary-500 transition-colors">
                       {goal.title}
                     </p>
                     <p className="text-xs text-muted mt-0.5">

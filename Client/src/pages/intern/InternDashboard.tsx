@@ -164,17 +164,34 @@ export default function InternDashboard() {
 
       {/* Quick actions */}
       <div className="grid sm:grid-cols-3 gap-4">
-        <Link to="/intern/reports/new" className="flex items-center gap-3 p-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl transition-all hover:shadow-glow">
-          <FileText size={20} />
-          <span className="font-semibold text-sm">Submit Weekly Report</span>
+        <Link 
+          to="/intern/reports/new" 
+          className="flex items-center gap-4 p-5 bg-primary text-white rounded-3xl transition-all hover:shadow-glow hover:-translate-y-1 group"
+        >
+          <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <FileText size={20} />
+          </div>
+          <span className="font-bold text-sm tracking-tight">Submit Weekly Report</span>
         </Link>
-        <Link to="/intern/goals" className="flex items-center gap-3 p-4 bg-surface border border-border hover:shadow-hover text-primaryText rounded-2xl transition-all">
-          <Target size={20} className="text-primary" />
-          <span className="font-semibold text-sm">View My Goals</span>
+        
+        <Link 
+          to="/intern/goals" 
+          className="flex items-center gap-4 p-5 bg-card border border-border hover:border-primary/30 text-primaryText rounded-3xl transition-all hover:shadow-card hover:-translate-y-1 group"
+        >
+          <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+            <Target size={20} />
+          </div>
+          <span className="font-bold text-sm tracking-tight text-primaryText">View My Goals</span>
         </Link>
-        <Link to="/intern/leaderboard" className="flex items-center gap-3 p-4 bg-surface border border-border hover:shadow-hover text-primaryText rounded-2xl transition-all">
-          <Trophy size={20} className="text-warning" />
-          <span className="font-semibold text-sm">Leaderboard</span>
+        
+        <Link 
+          to="/intern/leaderboard" 
+          className="flex items-center gap-4 p-5 bg-card border border-border hover:border-warning/30 text-primaryText rounded-3xl transition-all hover:shadow-card hover:-translate-y-1 group"
+        >
+          <div className="w-10 h-10 rounded-2xl bg-warning/10 flex items-center justify-center text-warning group-hover:scale-110 transition-transform">
+            <Trophy size={20} />
+          </div>
+          <span className="font-bold text-sm tracking-tight text-primaryText">Leaderboard</span>
         </Link>
       </div>
     </div>

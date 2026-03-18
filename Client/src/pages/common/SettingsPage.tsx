@@ -41,7 +41,7 @@ export default function SettingsPage() {
 
   return (
     <div className="page-container space-y-6 max-w-2xl">
-      <h2 className="text-2xl font-bold text-secondary dark:text-white">Settings</h2>
+      <h2 className="text-2xl font-bold text-primaryText">Settings</h2>
 
       {/* Profile */}
       <Card>
@@ -52,7 +52,7 @@ export default function SettingsPage() {
               {user?.name?.charAt(0)}
             </div>
             <div>
-              <p className="font-semibold text-secondary dark:text-white">{user?.name}</p>
+              <p className="font-semibold text-primaryText">{user?.name}</p>
               <p className="text-sm text-muted capitalize">{user?.role} • {user?.email}</p>
             </div>
           </div>
@@ -79,7 +79,7 @@ export default function SettingsPage() {
         <CardBody>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-secondary dark:text-white">Dark Mode</p>
+              <p className="text-sm font-medium text-primaryText">Dark Mode</p>
               <p className="text-xs text-muted mt-0.5">Switch between light and dark themes</p>
             </div>
             <button

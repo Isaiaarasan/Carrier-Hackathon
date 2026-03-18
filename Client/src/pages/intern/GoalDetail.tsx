@@ -56,14 +56,14 @@ export default function GoalDetail() {
                   <Target size={22} className="text-primary-500" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-secondary dark:text-white">{goal.title}</h1>
+                  <h1 className="text-xl font-bold text-primaryText">{goal.title}</h1>
                   <p className="text-xs text-muted mt-0.5">Week {goal.week}</p>
                 </div>
               </div>
               <Badge variant={goalStatusBadge(goal.status)} className="shrink-0">{goal.status}</Badge>
             </div>
 
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6">{goal.description}</p>
+            <p className="text-sm text-secondary dark:text-gray-400 leading-relaxed mb-6">{goal.description}</p>
 
             <div className="grid sm:grid-cols-3 gap-4 mb-6">
               {[
@@ -76,7 +76,7 @@ export default function GoalDetail() {
                     <Icon size={14} className="text-muted" />
                     <span className="text-xs text-muted font-medium">{label}</span>
                   </div>
-                  <p className="text-sm font-semibold text-secondary dark:text-white">{value}</p>
+                  <p className="text-sm font-semibold text-primaryText">{value}</p>
                 </div>
               ))}
             </div>

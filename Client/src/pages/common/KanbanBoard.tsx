@@ -73,7 +73,7 @@ export default function KanbanBoard() {
   return (
     <div className="page-container h-full">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-secondary dark:text-white">
+        <h2 className="text-2xl font-bold text-primaryText">
           Kanban Board
         </h2>
         <p className="text-sm text-muted mt-1">
@@ -139,7 +139,7 @@ export default function KanbanBoard() {
                         size={14}
                         className="text-primary-500 mt-0.5 shrink-0"
                       />
-                      <p className="text-sm font-medium text-secondary dark:text-white leading-snug">
+                      <p className="text-sm font-medium text-primaryText leading-snug">
                         {goal.title}
                       </p>
                     </div>

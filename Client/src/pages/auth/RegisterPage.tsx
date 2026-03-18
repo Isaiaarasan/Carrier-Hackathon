@@ -44,10 +44,10 @@ export default function RegisterPage() {
             <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center">
               <span className="text-white font-bold">IP</span>
             </div>
-            <span className="text-xl font-bold text-secondary dark:text-white">InternPulse</span>
+            <span className="text-xl font-bold text-primaryText">InternPulse</span>
           </Link>
-          <h1 className="text-2xl font-bold text-secondary dark:text-white">Create your account</h1>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Join InternPulse in less than 2 minutes</p>
+          <h1 className="text-2xl font-bold text-primaryText">Create your account</h1>
+          <p className="text-muted text-sm mt-1">Join InternPulse in less than 2 minutes</p>
         </div>
 
         <div className="bg-white dark:bg-gray-900 rounded-3xl border border-border dark:border-gray-800 shadow-hover p-8">
@@ -66,7 +66,7 @@ export default function RegisterPage() {
                       : 'border-border dark:border-gray-700 hover:border-primary-300'
                   }`}
                 >
-                  <p className="font-semibold text-secondary dark:text-white text-sm">{label}</p>
+                  <p className="font-semibold text-primaryText text-sm">{label}</p>
                   <p className="text-xs text-muted mt-0.5">{desc}</p>
                 </button>
               ))}
@@ -113,7 +113,7 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
+          <p className="text-center text-sm text-muted mt-6">
             Already have an account?{' '}
             <Link to="/login" className="text-primary-500 hover:text-primary-600 font-semibold">
               Sign in

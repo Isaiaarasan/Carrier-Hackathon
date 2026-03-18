@@ -23,9 +23,14 @@ export const getTheme = async (req, res) => {
           bgSurface: "#ffffff",
           bgSurface2: "#f1f5f9",
           bgSurface3: "#e2e8f0",
+          cardBg: "#ffffff",
+          inputBg: "#ffffff",
+          inputBorder: "#e2e8f0",
+          borderColor: "rgba(0,0,0,0.08)",
           textPrimary: "#0f172a",
           textSecondary: "#334155",
           textMuted: "#64748b",
+          textInvert: "#ffffff",
         },
       });
     }
@@ -90,9 +95,14 @@ export const resetTheme = async (req, res) => {
       bgSurface: "#ffffff",
       bgSurface2: "#f1f5f9",
       bgSurface3: "#e2e8f0",
+      cardBg: "#ffffff",
+      inputBg: "#ffffff",
+      inputBorder: "#e2e8f0",
+      borderColor: "rgba(0,0,0,0.08)",
       textPrimary: "#0f172a",
       textSecondary: "#334155",
       textMuted: "#64748b",
+      textInvert: "#ffffff",
     };
 
     const settings = await Settings.findOneAndUpdate(

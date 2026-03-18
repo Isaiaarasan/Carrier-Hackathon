@@ -24,7 +24,7 @@ export default function AnalyticsReports() {
     <div className="page-container space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-secondary dark:text-white">Analytics Reports</h2>
+          <h2 className="text-2xl font-bold text-primaryText">Analytics Reports</h2>
           <p className="text-sm text-muted mt-1">Real-time team-wide performance metrics</p>
         </div>
         <Button variant="secondary" onClick={() => toast.success('CSV export coming soon!')}>
@@ -42,7 +42,7 @@ export default function AnalyticsReports() {
         ].map(({ label, value, suffix }) => (
           <div key={label} className="stat-card">
             <p className="text-xs text-muted font-semibold uppercase mb-3">{label}</p>
-            <p className="text-3xl font-black text-secondary dark:text-white">{value}<span className="text-base text-muted font-medium">{suffix}</span></p>
+            <p className="text-3xl font-black text-primaryText">{value}<span className="text-base text-muted font-medium">{suffix}</span></p>
           </div>
         ))}
       </div>

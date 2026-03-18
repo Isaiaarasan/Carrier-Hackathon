@@ -35,7 +35,7 @@ export default function InternList() {
     <div className="page-container space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-secondary dark:text-white">
+          <h2 className="text-2xl font-bold text-primaryText">
             Intern Directory
           </h2>
           <p className="text-sm text-muted mt-1">
@@ -109,17 +109,17 @@ export default function InternList() {
                           {intern.name.charAt(0)}
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-secondary dark:text-white">
+                          <p className="text-sm font-semibold text-primaryText">
                             {intern.name}
                           </p>
                           <p className="text-xs text-muted">{intern.email}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">
+                    <td className="px-4 py-4 text-sm text-secondary dark:text-gray-400">
                       {intern.department}
                     </td>
-                    <td className="px-4 py-4 text-sm font-semibold text-secondary dark:text-white">
+                    <td className="px-4 py-4 text-sm font-semibold text-primaryText">
                       {intern.goalsAssigned || 0}
                     </td>
                     <td className="px-4 py-4">

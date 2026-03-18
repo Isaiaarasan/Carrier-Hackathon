@@ -14,7 +14,7 @@ export function Skeleton({ className }: SkeletonProps) {
 
 export function StatCardSkeleton() {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-border dark:border-gray-700 space-y-3">
+    <div className="bg-surface rounded-2xl p-6 border border-border space-y-3">
       <Skeleton className="h-4 w-24" />
       <Skeleton className="h-8 w-16" />
       <Skeleton className="h-3 w-32" />
