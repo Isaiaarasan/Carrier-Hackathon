@@ -1,6 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Header from './Header'
+import AIChatPanel from './AIChatPanel'
+import { useChatStore } from '../../stores/chatStore'
 
 const pageTitles: Record<string, string> = {
   '/intern/dashboard': 'Dashboard',
@@ -27,6 +29,7 @@ const pageTitles: Record<string, string> = {
 export default function AppLayout() {
   const { pathname } = useLocation()
   const title = pageTitles[pathname] || 'InternPulse'
+  const { isOpen, close } = useChatStore()
 
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-base)' }}>
@@ -37,6 +40,9 @@ export default function AppLayout() {
           <Outlet />
         </main>
       </div>
+
+      {/* Global AI Chat Overlay */}
+      <AIChatPanel isOpen={isOpen} onClose={close} />
     </div>
   )
 }

@@ -24,12 +24,37 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Close on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen, onClose]);
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -74,6 +99,7 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
 
           {/* Panel */}
           <motion.div
+            ref={panelRef}
             initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
@@ -170,7 +196,10 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
               ))}
               {isLoading && (
                 <div className="flex gap-3">
-                  <div className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center bg-purple-600/10 text-purple-600 dark:text-purple-400">
+                  <div 
+                    className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center"
+                    style={{ background: "rgba(var(--primary-rgb), 0.1)", color: "var(--primary)" }}
+                  >
                     <Bot size={16} />
                   </div>
                   <div

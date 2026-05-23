@@ -159,7 +159,7 @@ export default function LandingPage() {
           >
             Sign In
           </Link>
-          <Link
+          {/* <Link
             to="/login"
             className="text-sm font-semibold px-5 py-2.5 rounded-2xl transition-all duration-200"
             style={{
@@ -169,7 +169,7 @@ export default function LandingPage() {
             }}
           >
             Get Started
-          </Link>
+          </Link> */}
         </div>
       </nav>
 
@@ -541,14 +541,14 @@ export default function LandingPage() {
             </span>
           </div>
           <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-            © 2025 InternPulse · Built for hackathon excellence 🚀
+            © 2025 InternPulse · Built for Knowledge Sharing
           </p>
           <div
             className="flex gap-6 text-xs"
             style={{ color: "var(--text-muted)" }}
           >
-            {["Privacy", "Terms", "Contact"].map((l) => (
-              <a
+           {/* {["Privacy", "Terms", "Contact"].map((l) => ( */}
+              {/* <a
                 key={l}
                 href="#"
                 className="transition-colors"
@@ -558,7 +558,7 @@ export default function LandingPage() {
               >
                 {l}
               </a>
-            ))}
+            ))} */}
           </div>
         </div>
       </footer>

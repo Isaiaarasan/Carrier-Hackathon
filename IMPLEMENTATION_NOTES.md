@@ -515,7 +515,7 @@ getInternProgress(); // Individual progress & heatmap
 
 ## 📝 Deployment Checklist
 
-- [ ] Database seeded with test data
+- [ ] Database ed with test data
 - [ ] Environment variables configured
   - `GROQ_API_KEY` for AI summarization
   - `FRONTEND_URL` for CORS
