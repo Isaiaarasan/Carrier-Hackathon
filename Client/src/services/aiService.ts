@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://internpulse-xj7p.onrender.com/api';
 
 export const aiService = {
   chat: async (message: string, history: { role: 'user' | 'assistant'; content: string }[]) => {
